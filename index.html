@@ -45,20 +45,20 @@
       z-index: -1;
     }
 
-    #loader {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: var(--primary);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 24px;
-      z-index: 9999;
-      animation: loaderSequence 5s forwards;
-    }
+#loader {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: var(--primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 24px;
+  z-index: 9999;
+  transition: opacity 1s ease, visibility 1s ease;
+}
 
     #loaderIcon {
       width: 100px;
@@ -67,7 +67,7 @@
     }
 
     .dot-animation::after {
-      content: '.';
+      content: '';
       animation: dots 2s infinite steps(3, end);
     }
 
@@ -193,16 +193,26 @@
         gap: 10px;
       }
     }
+#loadingText,
+#welcomeText {
+  transition: opacity 1s ease;
+}
+
+#welcomeText {
+  opacity: 0;
+  display: none;
+  font-size: 26px;
+}
   </style>
 </head>
 <body>
   <div class="blur-bg"></div>
 
-  <div id="loader">
-    <img id="loaderIcon" src="Images/XD.jpg" alt="Loading Icon" />
-    <div class="dot-animation">กำลังโหลด</div>
-    <div id="welcomeText" style="opacity: 0; transition: opacity 1s ease;">ยินดีต้อนรับสู่เว็บไซต์</div>
-  </div>
+<div id="loader">
+  <img id="loaderIcon" src="Images/XD.jpg" alt="Loading Icon" />
+  <div id="loadingText" class="dot-animation">กำลังโหลด</div>
+  <div id="welcomeText">ยินดีต้อนรับสู่เว็บไซต์</div>
+</div>
 
   <audio id="backgroundMusic" loop>
     <source src="Music/Citlali.mp3" type="audio/mpeg">
@@ -246,6 +256,55 @@
     <h2>⏳ จนถึงวันจบการศึกษา</h2>
     <div id="countdownTimer"></div>
   </section>
+<section id="intro">
+  <h2>💐 กิจกรรมไหว้ครูคืออะไร?</h2>
+  <p>
+    กิจกรรมไหว้ครูเป็นประเพณีที่สำคัญของโรงเรียนในประเทศไทย โดยมีวัตถุประสงค์เพื่อแสดงความเคารพและระลึกถึงพระคุณของครู อาจารย์ผู้ให้ความรู้แก่นักเรียน 
+    พิธีจะจัดขึ้นในช่วงต้นปีการศึกษา พร้อมด้วยพานดอกไม้ ธูป เทียน และการกล่าวบทไหว้ครูจากนักเรียน
+  </p>
+</section>
+
+<section id="phaan">
+  <h2>🌸 พานไหว้ครูของพวกเรา</h2>
+  <p>
+    พานไหว้ครูในปีนี้เราได้ออกแบบร่วมกันในธีม "ความรัก ความผูกพัน และความขอบคุณ" ซึ่งพานของเราใช้ดอกไม้สด เช่น ดอกมะเขือ ดอกเข็ม และหญ้าแพรก
+    ที่ล้วนมีความหมายถึงปัญญา ความขยัน และความอ่อนน้อมถ่อมตน
+  </p>
+  <div class="gallery">
+    <img src="Images/phaan1.jpg" alt="พานไหว้ครู 1" />
+    <img src="Images/phaan2.jpg" alt="พานไหว้ครู 2" />
+    <img src="Images/phaan3.jpg" alt="พานไหว้ครู 3" />
+  </div>
+</section>
+
+<section id="quotes">
+  <h2>📝 คำคมถึงคุณครู</h2>
+  <blockquote>
+    “ครูคือผู้จุดแสงสว่างแห่งปัญญาให้กับโลก”<br/>— ไม่ทราบผู้กล่าว
+  </blockquote>
+  <blockquote>
+    “ขอบคุณครูที่เป็นแรงบันดาลใจในการเดินทางตามฝันของเรา”<br/>— นักเรียนห้อง ปวช.1/IT
+  </blockquote>
+</section>
+
+<section id="memories">
+  <h2>📷 ความทรงจำดีๆ ของเรา</h2>
+  <p>
+    ภาพความประทับใจจากวันงานไหว้ครูและเบื้องหลังการเตรียมพานจากพวกเราทุกคน ความร่วมมือ ความสนุกสนาน และมิตรภาพที่ไม่มีวันลืม
+  </p>
+  <div class="gallery">
+    <img src="Images/memory1.jpg" alt="เตรียมพาน" />
+    <img src="Images/memory2.jpg" alt="วันงาน" />
+    <img src="Images/memory3.jpg" alt="กลุ่มเพื่อน" />
+  </div>
+</section>
+
+<section id="thankyou">
+  <h2>🙏 ขอบคุณจากใจ</h2>
+  <p>
+    ขอบคุณคุณครูทุกท่านที่อยู่เคียงข้างและชี้นำเราในเส้นทางชีวิต ขอให้ท่านมีความสุข สุขภาพแข็งแรง และเป็นแรงบันดาลใจให้กับนักเรียนตลอดไป 💖
+  </p>
+</section>
 
   <footer>
     <div class="footer-left">
@@ -260,17 +319,47 @@
   </footer>
 
   <script>
-    window.addEventListener('DOMContentLoaded', () => {
-      setTimeout(() => {
-        document.querySelector('.dot-animation').style.display = 'none';
-        const welcome = document.getElementById('welcomeText');
-        welcome.style.opacity = 1;
+  window.addEventListener('load', () => {
+    const loadingText = document.getElementById('loadingText');
+    const welcomeText = document.getElementById('welcomeText');
+    const loader = document.getElementById('loader');
+
+    const dots = ['', '.'];
+    let dotIndex = 0;
+    let loopCount = 0;
+
+    // เปลี่ยนข้อความทุก 700ms ให้ดูสบายตามากขึ้น
+    const loadingInterval = setInterval(() => {
+      loadingText.textContent = 'กำลังโหลด' + dots[dotIndex];
+      dotIndex++;
+
+      if (dotIndex >= dots.length) {
+        dotIndex = 0;
+        loopCount++;
+      }
+
+      if (loopCount === 3) { // จบที่รอบที่ 3 ของ “...”
+        clearInterval(loadingInterval);
+
+        // ซ่อน “กำลังโหลด...” และแสดง “ยินดีต้อนรับ”
+        loadingText.style.display = 'none';
+        welcomeText.style.display = 'block';
+
         setTimeout(() => {
-          document.getElementById('loader').style.display = 'none';
-          document.body.classList.remove('no-scroll');
-        }, 2000);
-      }, 3000);
-    });
+          welcomeText.style.opacity = '1'; // fade in
+        }, 100);
+
+        setTimeout(() => {
+          welcomeText.style.opacity = '0'; // fade out
+        }, 3000);
+
+        setTimeout(() => {
+          loader.style.opacity = '0';
+          loader.style.visibility = 'hidden';
+        }, 4500);
+      }
+    }, 700); // ความเร็ว 700ms ต่อจุด (ไม่เร็วเกินไป)
+  });
 
     const memories = [
       "วันที่เราร้องไห้กับครูครั้งแรก",
@@ -301,7 +390,7 @@
     const audio = document.getElementById('backgroundMusic');
     const toggleBtn = document.getElementById('toggleSoundButton');
     const volumeSlider = document.getElementById('volumeSlider');
-    audio.volume = 0.5;
+    audio.volume = 0.25;
     audio.muted = true;
 
     document.body.addEventListener('click', () => {
