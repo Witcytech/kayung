@@ -1,251 +1,285 @@
 <!DOCTYPE html>
- <html lang="th">
- <head>
+<html lang="th">
+<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>เรื่องราว</title>
   <link href="https://fonts.googleapis.com/css2?family=Mali:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
-  :root {
-    --primary: #0A2463; /* สีน้ำเงินเข้มลึกสำหรับองค์ประกอบหลัก */
-    --secondary: #E0E6EF; /* สีเทาอมฟ้านวลๆ สำหรับข้อความและองค์ประกอบรอง */
-    --background: #0D1A2E; /* สีน้ำเงินเข้มเกือบดำสำหรับพื้นหลังหลัก */
-    --card: #1D3557; /* สีน้ำเงินเข้มปานกลางสำหรับกล่องเนื้อหา */
-    --text: #F0F4F8; /* สีขาวอมเทาอ่อนสำหรับตัวอักษรบนพื้นหลังเข้ม */
-    --footer-bg: #050A13; /* สีน้ำเงินเข้มที่สุดสำหรับ Footer */
-    --footer-text: #A7B6CA; /* สีเทาอมฟ้าอ่อนสำหรับข้อความ Footer */
-    --footer-text-hover: #ffffff; /* สีขาวเมื่อ Hover ข้อความ Footer */
-  }
+    :root {
+      --primary: #0A2463; /* สีน้ำเงินเข้มลึกสำหรับองค์ประกอบหลัก */
+      --secondary: #E0E6EF; /* สีเทาอมฟ้านวลๆ สำหรับข้อความและองค์ประกอบรอง */
+      --background: #0D1A2E; /* สีน้ำเงินเข้มเกือบดำสำหรับพื้นหลังหลัก */
+      --card: #1D3557; /* สีน้ำเงินเข้มปานกลางสำหรับกล่องเนื้อหา */
+      --text: #F0F4F8; /* สีขาวอมเทาอ่อนสำหรับตัวอักษรบนพื้นหลังเข้ม */
+      --footer-bg: #050A13; /* สีน้ำเงินเข้มที่สุดสำหรับ Footer */
+      --footer-text: #A7B6CA; /* สีเทาอมฟ้าอ่อนสำหรับข้อความ Footer */
+      --footer-text-hover: #ffffff; /* สีขาวเมื่อ Hover ข้อความ Footer */
+    }
 
-  * {
-    margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth;
-  }
+    * {
+      margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth;
+    }
 
-  body {
-    font-family: 'Mali', sans-serif;
-    background-color: var(--background); /* This ensures the fallback background color */
-    color: var(--text);
-    opacity: 0;
-    animation: fadeInBody 1.2s ease forwards;
-  }
+    body {
+      font-family: 'Mali', sans-serif;
+      background-color: var(--background);
+      color: var(--text);
+      opacity: 0;
+      animation: fadeInBody 1.2s ease forwards;
+    }
 
-  @keyframes fadeInBody {
-    to { opacity: 1; }
-  }
+    @keyframes fadeInBody {
+      to { opacity: 1; }
+    }
 
-  .no-scroll { overflow: hidden; }
+    .no-scroll { overflow: hidden; }
 
-  .blur-bg {
-    background: url('Images/XX.jpg') center/cover no-repeat;
-    filter: blur(8px);
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    z-index: -1;
-  }
+    .blur-bg {
+      background: url('Images/XX.jpg') center/cover no-repeat;
+      filter: blur(8px);
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
+    }
 
-  #loader {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: var(--background); /* เปลี่ยน Loader background เป็นสีพื้นหลังเข้ม */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: var(--text); /* เปลี่ยนสีข้อความ Loader */
-    font-size: 24px;
-    z-index: 9999;
-    transition: opacity 1s ease, visibility 1s ease;
-  }
+    #loader {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: var(--background);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--text);
+      font-size: 24px;
+      z-index: 9999;
+      transition: opacity 1s ease, visibility 1s ease;
+    }
 
-  #loaderIcon {
-    width: 100px;
-    height: 130px;
-    margin-bottom: 20px;
-  }
+    #loaderIcon {
+      width: 100px;
+      height: 130px;
+      margin-bottom: 20px;
+    }
 
-  .dot-animation::after {
-    content: '';
-    animation: dots 2s infinite steps(3, end);
-  }
+    .dot-animation::after {
+      content: '';
+      animation: dots 2s infinite steps(3, end);
+    }
 
-  @keyframes dots {
-    0% { content: '.'; }
-    33% { content: '..'; }
-    66% { content: '...'; }
-  }
+    @keyframes dots {
+      0% { content: '.'; }
+      33% { content: '..'; }
+      66% { content: '...'; }
+    }
 
-  header {
-    text-align: center;
-    padding: 30px 20px;
-    background: var(--primary);
-    color: var(--secondary);
-  }
+    header {
+      text-align: center;
+      padding: 30px 20px;
+      background: var(--primary);
+      color: var(--secondary);
+    }
 
-  section {
-    max-width: 900px;
-    margin: 40px auto;
-    padding: 25px;
-    background: var(--card); /* เปลี่ยนสีพื้นหลัง Section */
-    border-radius: 15px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2); /* เพิ่มเงาให้เข้มขึ้นเล็กน้อย */
-  }
+    section {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 25px;
+      background: var(--card);
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
 
-/* --- MENU BAR STYLES --- */
-nav.menu-bar {
-  position: fixed;
-  top: 20px; /* Changed from bottom: 20px; */
-  left: 20px;
-  z-index: 1000;
-  display: flex;
-  flex-direction: column; /* Keep as column to stack items */
-  align-items: flex-start;
-}
+    /* --- MENU BAR STYLES --- */
+    nav.menu-bar {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 0;
+      background: transparent;
+      /* Add more padding to increase the hover/tap area for the entire menu bar */
+      /* This helps keep the menu open if the mouse briefly drifts off the button onto the menu items */
+      padding-bottom: 5px; /* Adjust as needed */
+    }
 
-nav.menu-bar #menuToggle {
-  background: var(--primary);
-  border: none;
-  color: var(--text); /* เปลี่ยนสีไอคอนปุ่มเมนู */
-  font-size: 26px;
-  border-radius: 12px;
-  width: 55px;
-  height: 55px;
-  cursor: pointer;
-  margin-bottom: 10px; /* Keep margin-bottom for spacing when menu opens downwards */
-}
+    nav.menu-bar #menuToggle {
+      background: var(--primary);
+      border: none;
+      color: var(--text);
+      font-size: 26px;
+      border-radius: 12px;
+      width: 55px;
+      height: 55px;
+      cursor: pointer;
+      position: relative;
+      z-index: 1001;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      transition: all 0.3s ease;
+      -webkit-tap-highlight-color: rgba(0,0,0,0); /* Removes tap highlight on iOS */
+      /* Ensure it's always tappable */
+      touch-action: manipulation; /* Prevents double-tap zoom behavior */
+    }
 
-.menu-items {
-  background: rgba(29, 53, 87, 0.9); /* เปลี่ยนสีพื้นหลังเมนูให้เข้มขึ้น */
-  border: 1px solid var(--primary); /* เปลี่ยนสีขอบเมนู */
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column; /* Changed from column-reverse to column */
-  padding: 8px;
-  gap: 10px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.4); /* ทำให้เงาเข้มขึ้น */
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  transform-origin: top left; /* Changed from bottom left */
-}
+    nav.menu-bar #menuToggle:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 16px rgba(0,0,0,0.6);
+    }
 
-  .menu-items.hidden {
-    opacity: 0;
-    transform: scale(0.8);
-    pointer-events: none;
-  }
+    .menu-items {
+      background: rgba(29, 53, 87, 0.95);
+      border: 1px solid var(--primary);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      padding: 8px;
+      gap: 8px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+      transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+      opacity: 0;
+      pointer-events: none;
+      transform-origin: top left;
+      transform: scale(0.9);
+      position: absolute;
+      top: 65px; /* Position below the toggle button */
+      left: 0;
+      min-width: 180px;
+    }
 
-  .menu-items button {
-    background: var(--primary);
-    color: var(--secondary); /* เปลี่ยนสีข้อความปุ่มเมนู */
-    border: none;
-    padding: 10px;
-    border-radius: 8px;
-    text-align: left;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    transition: background 0.3s;
-  }
+    .menu-items.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: scale(1);
+      transition: opacity 0.3s ease-in, transform 0.3s ease-in;
+    }
 
-  .menu-items button:hover {
-    background: #2A487B; /* สีน้ำเงินเข้มขึ้นเมื่อ hover */
-  }
+    .menu-items button {
+      background: var(--primary);
+      color: var(--secondary);
+      border: none;
+      padding: 10px 15px;
+      border-radius: 8px;
+      text-align: left;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      /* Only transition background and color, remove transform */
+      transition: background 0.3s ease, color 0.3s ease;
+      -webkit-tap-highlight-color: rgba(0,0,0,0);
+      touch-action: manipulation; /* Prevents double-tap zoom on buttons */
+    }
 
-/* Also adjust the media query for smaller screens if needed */
-@media (max-width: 768px) {
-  nav.menu-bar {
-    top: 10px; /* Changed from bottom: 10px; */
-    left: 10px;
-  }
-  nav.menu-bar #menuToggle {
-    width: 50px;
-    height: 50px;
-    font-size: 24px;
-  }
-  .menu-items button {
-    font-size: 15px;
-    padding: 8px;
-  }
-}
-  /* --- END MENU BAR STYLES --- */
+    .menu-items button:hover {
+      background: #2A487B;
+      color: var(--footer-text-hover);
+      /* No transform on hover for individual items */
+    }
 
-  .gallery {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px;
-  }
+    /* Responsive adjustments for mobile */
+    @media (max-width: 768px) {
+        nav.menu-bar {
+            top: 10px;
+            left: 10px;
+        }
+        nav.menu-bar #menuToggle {
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+        }
+        .menu-items {
+            top: 60px;
+            padding: 8px;
+            min-width: 150px;
+        }
+        .menu-items button {
+            font-size: 15px;
+            padding: 8px 12px;
+        }
+    }
+    /* --- END MENU BAR STYLES --- */
 
-  .gallery img {
-    width: 100%;
-    max-width: 180px;
-    border-radius: 10px;
-    transition: 0.3s ease;
-    box-shadow: 0 0 10px rgba(0,0,0,0.3); /* ทำให้เงาเข้มขึ้น */
-    height: auto;
-  }
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+    }
 
-  .gallery img:hover {
-    transform: scale(1.05);
-  }
+    .gallery img {
+      width: 100%;
+      max-width: 180px;
+      border-radius: 10px;
+      transition: 0.3s ease;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      height: auto;
+    }
 
-  footer {
-    background-color: var(--footer-bg); /* ใช้สี footer-bg ที่เข้มขึ้น */
-    color: var(--footer-text); /* ใช้สี footer-text ที่สว่างขึ้น */
-    padding: 40px 50px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 20px;
-  }
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
 
-  .footer-left, .social-media {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 15px;
-  }
+    footer {
+      background-color: var(--footer-bg);
+      color: var(--footer-text);
+      padding: 40px 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
 
-  .footer-left a,
-  .social-media a {
-    color: var(--footer-text); /* เปลี่ยนสีลิงก์ใน Footer */
-    text-decoration: none;
-    transition: transform 0.3s ease, color 0.3s ease;
-  }
+    .footer-left, .social-media {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 15px;
+    }
 
-  .footer-left a:hover,
-  .social-media a:hover {
-    color: var(--footer-text-hover);
-    transform: scale(1.2);
-  }
+    .footer-left a,
+    .social-media a {
+      color: var(--footer-text);
+      text-decoration: none;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
 
-  #loadingText,
-  #welcomeText {
-    transition: opacity 1s ease;
-    text-align: center;
-  }
+    .footer-left a:hover,
+    .social-media a:hover {
+      color: var(--footer-text-hover);
+      transform: scale(1.2);
+    }
 
-  #welcomeText {
-    opacity: 0;
-    display: none;
-    font-size: 26px;
-  }
+    #loadingText,
+    #welcomeText {
+      transition: opacity 1s ease;
+      text-align: center;
+    }
 
-  .quote-box {
-    padding: 15px;
-    border-left: 5px solid var(--primary); /* คง border-left เป็น primary color */
-    background-color: var(--card); /* ใช้สี card ที่เข้มขึ้น */
-    margin-top: 15px;
-    font-style: italic;
-    color: var(--text); /* ตรวจสอบให้ข้อความใน quote-box เป็นสี text */
-  }
- </style>
- </head>
- <body>
+    #welcomeText {
+      opacity: 0;
+      display: none;
+      font-size: 26px;
+    }
+
+    .quote-box {
+      padding: 15px;
+      border-left: 5px solid var(--primary);
+      background-color: var(--card);
+      margin-top: 15px;
+      font-style: italic;
+      color: var(--text);
+    }
+  </style>
+</head>
+<body>
   <div class="blur-bg"></div>
 
   <div id="loader">
@@ -263,14 +297,14 @@ nav.menu-bar #menuToggle {
     <p>แด่ครูและเพื่อนรักของเรา</p>
   </header>
 
-  <nav class="menu-bar">
+  <nav class="menu-bar" id="mainMenuBar">
     <button id="menuToggle" aria-label="เมนูหลัก"><i class="fas fa-bars"></i></button>
-    <div class="menu-items hidden">
+    <div class="menu-items">
       <button data-label="ภาพ" onclick="scrollToSection('gallery-main')"><i class="fas fa-image"></i> ภาพ</button>
       <button data-label="ความทรงจำ" onclick="scrollToSection('memories-main')"><i class="fas fa-book"></i> ความทรงจำ</button>
       <button data-label="ข้อความ" onclick="scrollToSection('quotes-main')"><i class="fas fa-comment"></i> ข้อความ</button>
       <button data-label="เวลาจบ" onclick="scrollToSection('countdown')"><i class="fas fa-clock"></i> เวลาจบ</button>
-      <button id="toggleSoundButton" data-label="เสียง"><i class="fas fa-volume-mute"></i> เสียง (ปิด)</button>
+      <button id="toggleSoundButton" data-label="เสียง"><i class="fas fa-volume-mute"></i> เสียง</button>
     </div>
   </nav>
 
@@ -368,26 +402,26 @@ nav.menu-bar #menuToggle {
       const toggleSoundButton = document.getElementById('toggleSoundButton');
       const menuToggle = document.getElementById('menuToggle');
       const menuItems = document.querySelector('.menu-items');
+      const mainMenuBar = document.getElementById('mainMenuBar');
 
-      // Loader Logic
+      // Loader Logic (unchanged)
       let dotCount = 0;
       const loadingInterval = setInterval(() => {
-        dotCount = (dotCount + 1) % 4; // Cycles through 0, 1, 2, 3
+        dotCount = (dotCount + 1) % 4;
         const dots = '.'.repeat(dotCount);
         loadingText.textContent = `กำลังโหลด${dots}`;
       }, 700);
 
-      // Simulate loading time and then transition
       setTimeout(() => {
-        clearInterval(loadingInterval); // Stop dot animation
+        clearInterval(loadingInterval);
         loadingText.style.opacity = '0';
         setTimeout(() => {
           loadingText.style.display = 'none';
           welcomeText.style.display = 'block';
           setTimeout(() => {
             welcomeText.style.opacity = '1';
-          }, 50); // Small delay to trigger transition
-        }, 1000); // Wait for loadingText to fade out
+          }, 50);
+        }, 1000);
 
         setTimeout(() => {
           welcomeText.style.opacity = '0';
@@ -395,46 +429,70 @@ nav.menu-bar #menuToggle {
             loader.style.opacity = '0';
             loader.style.visibility = 'hidden';
             document.body.classList.remove('no-scroll');
-            // Play music after loader hides
-            backgroundMusic.muted = false; // Unmute by default after load
+            backgroundMusic.muted = false;
             backgroundMusic.play().catch(e => console.log("Music play failed:", e));
-            toggleSoundButton.innerHTML = '<i class="fas fa-volume-up"></i> เสียง (เปิด)';
-          }, 1000); // Wait for welcomeText to fade out
-        }, 3500); // Display welcome text for 2.5 seconds (3.5s - 1s fade in)
-      }, 3000); // Total "loading" time before welcome message appears
-
-      // Menu Toggle Logic
-      menuToggle.addEventListener('click', () => {
-        menuItems.classList.toggle('hidden');
-      });
-
-      // Menu Item Tooltip Logic
-      document.querySelectorAll(".menu-items button").forEach(btn => {
-        btn.addEventListener("click", () => {
-          const label = btn.getAttribute("data-label");
-          const tempTooltip = document.createElement("div");
-          tempTooltip.innerText = label;
-          tempTooltip.style.position = "fixed";
-          // ปรับตำแหน่ง tooltip ให้สัมพันธ์กับตำแหน่งเมนูใหม่
-          const btnRect = btn.getBoundingClientRect();
-          tempTooltip.style.left = (btnRect.right + 10) + "px"; // 10px ขวาจากปุ่ม
-          tempTooltip.style.top = btnRect.top + "px";
-          tempTooltip.style.background = "black";
-          tempTooltip.style.color = "white";
-          tempTooltip.style.padding = "5px 10px";
-          tempTooltip.style.borderRadius = "6px";
-          tempTooltip.style.zIndex = "9999";
-          tempTooltip.style.transition = "opacity 0.3s";
-          document.body.appendChild(tempTooltip);
-
-          setTimeout(() => {
-            tempTooltip.style.opacity = "0";
-            setTimeout(() => tempTooltip.remove(), 500);
+            toggleSoundButton.innerHTML = '<i class="fas fa-volume-up"></i> เสียง';
           }, 1000);
-        });
-      });
+        }, 3500);
+      }, 3000);
 
-      // Content for sections
+      // --- Menu Toggle Logic ---
+      const isMobile = window.matchMedia("(max-width: 768px)").matches;
+      let hideMenuTimeout; // To store the timeout for hiding the menu
+
+      // Function to show the menu
+      const showMenu = () => {
+        clearTimeout(hideMenuTimeout); // Clear any pending hide timeouts
+        menuItems.classList.add('active');
+      };
+
+      // Function to hide the menu with a delay
+      const hideMenuWithDelay = () => {
+        hideMenuTimeout = setTimeout(() => {
+          menuItems.classList.remove('active');
+        }, 300); // Increased delay to 300ms (0.3 seconds)
+      };
+
+      if (isMobile) {
+        // Mobile behavior: Tap to toggle
+        menuToggle.addEventListener('click', (event) => {
+          event.stopPropagation(); // Prevent event from bubbling up to document body
+          menuItems.classList.toggle('active');
+          // If menu is closed by toggle, clear any pending hide timeouts
+          if (!menuItems.classList.contains('active')) {
+            clearTimeout(hideMenuTimeout);
+          }
+        });
+
+        // Close menu if user taps outside of it on mobile
+        document.addEventListener('click', (event) => {
+          if (!mainMenuBar.contains(event.target) && menuItems.classList.contains('active')) {
+            menuItems.classList.remove('active');
+            clearTimeout(hideMenuTimeout);
+          }
+        });
+
+        // When a menu item is clicked on mobile, close the menu immediately
+        document.querySelectorAll(".menu-items button").forEach(btn => {
+          btn.addEventListener("click", () => {
+            // No need to explicitly remove 'active' here if scrollToSection does it
+            // but for robustness it's good to ensure it.
+            // scrollToSection already calls menuItems.classList.remove('active');
+          });
+        });
+
+      } else {
+        // Desktop behavior: Hover to open, mouseleave to hide with delay
+        mainMenuBar.addEventListener('mouseenter', showMenu);
+        mainMenuBar.addEventListener('mouseleave', hideMenuWithDelay);
+
+        // Crucial: If mouse enters the menu items themselves, keep menu open
+        menuItems.addEventListener('mouseenter', showMenu);
+        menuItems.addEventListener('mouseleave', hideMenuWithDelay);
+      }
+      // --- End Menu Toggle Logic ---
+
+      // Content for sections (unchanged)
       const memories = [
         "วันที่เราร้องไห้กับครูครั้งแรก",
         "เวลาที่เราทำพานไหว้ครูด้วยกัน",
@@ -450,7 +508,7 @@ nav.menu-bar #menuToggle {
       document.getElementById("randomMemory").innerText = memories[Math.floor(Math.random() * memories.length)];
       document.getElementById("quoteBox").innerText = quotes[Math.floor(Math.random() * quotes.length)];
 
-      // Countdown Timer
+      // Countdown Timer (unchanged)
       const gradDate = new Date("2026-03-31T23:59:59").getTime();
       const countdownTimerElement = document.getElementById("countdownTimer");
       setInterval(() => {
@@ -469,22 +527,22 @@ nav.menu-bar #menuToggle {
         countdownTimerElement.innerText = `เหลืออีก ${days} วัน ${hours} ชั่วโมง ${minutes} นาที ${seconds} วินาที`;
       }, 1000);
 
-      // Music Toggle
+      // Music Toggle (unchanged)
       toggleSoundButton.onclick = () => {
         backgroundMusic.muted = !backgroundMusic.muted;
-        toggleSoundButton.innerHTML = backgroundMusic.muted ? '<i class="fas fa-volume-mute"></i> เสียง (ปิด)' : '<i class="fas fa-volume-up"></i> เสียง (เปิด)';
+        toggleSoundButton.innerHTML = backgroundMusic.muted ? '<i class="fas fa-volume-mute"></i> เสียง' : '<i class="fas fa-volume-up"></i> เสียง';
       };
 
-      // Function to scroll to section
+      // Function to scroll to section (still closes menu)
       window.scrollToSection = (id) => {
         const element = document.getElementById(id);
         if (element) {
           element.scrollIntoView({ behavior: 'smooth' });
-          // Hide menu items after clicking a menu button
-          menuItems.classList.add('hidden');
+          menuItems.classList.remove('active'); // Close menu after selection
+          clearTimeout(hideMenuTimeout); // Clear any pending hide timeouts
         }
       };
     });
   </script>
- </body>
- </html>
+</body>
+</html>
