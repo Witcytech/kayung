@@ -1,218 +1,258 @@
 <!DOCTYPE html>
-<html lang="th">
-<head>
+ <html lang="th">
+ <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>เรื่องราว</title>
   <link href="https://fonts.googleapis.com/css2?family=Mali:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
-    :root {
-      --primary: #ff6fa1;
-      --secondary: #ffffff;
-      --background: #ffeaf0;
-      --card: #fff5f8;
-      --text: #333;
-      --footer-bg: #1f1f1f;
-      --footer-text: #a7a7a7;
-      --footer-text-hover: #ffffff;
-    }
+  :root {
+    --primary: #0A2463; /* สีน้ำเงินเข้มลึกสำหรับองค์ประกอบหลัก */
+    --secondary: #E0E6EF; /* สีเทาอมฟ้านวลๆ สำหรับข้อความและองค์ประกอบรอง */
+    --background: #0D1A2E; /* สีน้ำเงินเข้มเกือบดำสำหรับพื้นหลังหลัก */
+    --card: #1D3557; /* สีน้ำเงินเข้มปานกลางสำหรับกล่องเนื้อหา */
+    --text: #F0F4F8; /* สีขาวอมเทาอ่อนสำหรับตัวอักษรบนพื้นหลังเข้ม */
+    --footer-bg: #050A13; /* สีน้ำเงินเข้มที่สุดสำหรับ Footer */
+    --footer-text: #A7B6CA; /* สีเทาอมฟ้าอ่อนสำหรับข้อความ Footer */
+    --footer-text-hover: #ffffff; /* สีขาวเมื่อ Hover ข้อความ Footer */
+  }
 
-    * {
-      margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth;
-    }
+  * {
+    margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth;
+  }
 
-    body {
-      font-family: 'Mali', sans-serif;
-      background-color: var(--background);
-      color: var(--text);
-      opacity: 0;
-      animation: fadeInBody 1.2s ease forwards;
-    }
+  body {
+    font-family: 'Mali', sans-serif;
+    background-color: var(--background); /* This ensures the fallback background color */
+    color: var(--text);
+    opacity: 0;
+    animation: fadeInBody 1.2s ease forwards;
+  }
 
-    @keyframes fadeInBody {
-      to { opacity: 1; }
-    }
+  @keyframes fadeInBody {
+    to { opacity: 1; }
+  }
 
-    .no-scroll { overflow: hidden; }
+  .no-scroll { overflow: hidden; }
 
-    .blur-bg {
-      background: url('Images/jpg.jpg') center/cover no-repeat;
-      filter: blur(8px);
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: -1;
-    }
+  .blur-bg {
+    background: url('Images/XX.jpg') center/cover no-repeat;
+    filter: blur(8px);
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: -1;
+  }
 
-#loader {
+  #loader {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: var(--background); /* เปลี่ยน Loader background เป็นสีพื้นหลังเข้ม */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--text); /* เปลี่ยนสีข้อความ Loader */
+    font-size: 24px;
+    z-index: 9999;
+    transition: opacity 1s ease, visibility 1s ease;
+  }
+
+  #loaderIcon {
+    width: 100px;
+    height: 130px;
+    margin-bottom: 20px;
+  }
+
+  .dot-animation::after {
+    content: '';
+    animation: dots 2s infinite steps(3, end);
+  }
+
+  @keyframes dots {
+    0% { content: '.'; }
+    33% { content: '..'; }
+    66% { content: '...'; }
+  }
+
+  header {
+    text-align: center;
+    padding: 30px 20px;
+    background: var(--primary);
+    color: var(--secondary);
+  }
+
+  section {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 25px;
+    background: var(--card); /* เปลี่ยนสีพื้นหลัง Section */
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2); /* เพิ่มเงาให้เข้มขึ้นเล็กน้อย */
+  }
+
+/* --- MENU BAR STYLES --- */
+nav.menu-bar {
   position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: var(--primary);
+  top: 20px; /* Changed from bottom: 20px; */
+  left: 20px;
+  z-index: 1000;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 24px;
-  z-index: 9999;
-  transition: opacity 1s ease, visibility 1s ease;
+  flex-direction: column; /* Keep as column to stack items */
+  align-items: flex-start;
 }
 
-    #loaderIcon {
-      width: 100px;
-      height: 130px;
-      margin-bottom: 20px;
-    }
-
-    .dot-animation::after {
-      content: '';
-      animation: dots 2s infinite steps(3, end);
-    }
-
-    @keyframes dots {
-      0% { content: '.'; }
-      33% { content: '..'; }
-      66% { content: '...'; }
-    }
-
-    @keyframes loaderSequence {
-      0%, 60% { opacity: 1; }
-      100% { opacity: 0; visibility: hidden; }
-    }
-
-    header {
-      text-align: center;
-      padding: 30px 20px;
-      background: var(--primary);
-      color: var(--secondary);
-    }
-
-    section {
-      max-width: 900px;
-      margin: 40px auto;
-      padding: 25px;
-      background: var(--card);
-      border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    }
-
-    nav.menu-bar {
-      position: fixed;
-      bottom: 15px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 14px;
-      background: rgba(255,255,255,0.8);
-      padding: 10px 18px;
-      border-radius: 50px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
-      z-index: 1000;
-      backdrop-filter: blur(6px);
-    }
-
-    nav.menu-bar button {
-      background: var(--primary);
-      border: none;
-      color: white;
-      font-size: 18px;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: transform 0.3s ease, background 0.3s;
-    }
-
-    nav.menu-bar button:hover {
-      background: #ff4f87;
-      transform: scale(1.25);
-    }
-
-    nav.menu-bar input[type="range"] {
-      width: 80px;
-    }
-
-    .gallery {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 15px;
-    }
-
-    .gallery img {
-      width: 100%;
-      max-width: 180px;
-      border-radius: 10px;
-      transition: 0.3s ease;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      height: auto;
-    }
-
-    .gallery img:hover {
-      transform: scale(1.05);
-    }
-
-    footer {
-      background-color: var(--primary);
-      color: var(--secondary);
-      padding: 40px 50px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-
-    .footer-left, .social-media {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 15px;
-    }
-
-    .footer-left a,
-    .social-media a {
-      color: var(--secondary);
-      text-decoration: none;
-      transition: transform 0.3s ease, color 0.3s ease;
-    }
-
-    .footer-left a:hover,
-    .social-media a:hover {
-      color: var(--footer-text-hover);
-      transform: scale(1.2);
-    }
-
-    @media (max-width: 768px) {
-      nav.menu-bar {
-        flex-wrap: wrap;
-        gap: 10px;
-      }
-    }
-#loadingText,
-#welcomeText {
-  transition: opacity 1s ease;
-}
-
-#welcomeText {
-  opacity: 0;
-  display: none;
+nav.menu-bar #menuToggle {
+  background: var(--primary);
+  border: none;
+  color: var(--text); /* เปลี่ยนสีไอคอนปุ่มเมนู */
   font-size: 26px;
+  border-radius: 12px;
+  width: 55px;
+  height: 55px;
+  cursor: pointer;
+  margin-bottom: 10px; /* Keep margin-bottom for spacing when menu opens downwards */
 }
-  </style>
-</head>
-<body>
+
+.menu-items {
+  background: rgba(29, 53, 87, 0.9); /* เปลี่ยนสีพื้นหลังเมนูให้เข้มขึ้น */
+  border: 1px solid var(--primary); /* เปลี่ยนสีขอบเมนู */
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column; /* Changed from column-reverse to column */
+  padding: 8px;
+  gap: 10px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.4); /* ทำให้เงาเข้มขึ้น */
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  transform-origin: top left; /* Changed from bottom left */
+}
+
+  .menu-items.hidden {
+    opacity: 0;
+    transform: scale(0.8);
+    pointer-events: none;
+  }
+
+  .menu-items button {
+    background: var(--primary);
+    color: var(--secondary); /* เปลี่ยนสีข้อความปุ่มเมนู */
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: left;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .menu-items button:hover {
+    background: #2A487B; /* สีน้ำเงินเข้มขึ้นเมื่อ hover */
+  }
+
+/* Also adjust the media query for smaller screens if needed */
+@media (max-width: 768px) {
+  nav.menu-bar {
+    top: 10px; /* Changed from bottom: 10px; */
+    left: 10px;
+  }
+  nav.menu-bar #menuToggle {
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+  }
+  .menu-items button {
+    font-size: 15px;
+    padding: 8px;
+  }
+}
+  /* --- END MENU BAR STYLES --- */
+
+  .gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  .gallery img {
+    width: 100%;
+    max-width: 180px;
+    border-radius: 10px;
+    transition: 0.3s ease;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3); /* ทำให้เงาเข้มขึ้น */
+    height: auto;
+  }
+
+  .gallery img:hover {
+    transform: scale(1.05);
+  }
+
+  footer {
+    background-color: var(--footer-bg); /* ใช้สี footer-bg ที่เข้มขึ้น */
+    color: var(--footer-text); /* ใช้สี footer-text ที่สว่างขึ้น */
+    padding: 40px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .footer-left, .social-media {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .footer-left a,
+  .social-media a {
+    color: var(--footer-text); /* เปลี่ยนสีลิงก์ใน Footer */
+    text-decoration: none;
+    transition: transform 0.3s ease, color 0.3s ease;
+  }
+
+  .footer-left a:hover,
+  .social-media a:hover {
+    color: var(--footer-text-hover);
+    transform: scale(1.2);
+  }
+
+  #loadingText,
+  #welcomeText {
+    transition: opacity 1s ease;
+    text-align: center;
+  }
+
+  #welcomeText {
+    opacity: 0;
+    display: none;
+    font-size: 26px;
+  }
+
+  .quote-box {
+    padding: 15px;
+    border-left: 5px solid var(--primary); /* คง border-left เป็น primary color */
+    background-color: var(--card); /* ใช้สี card ที่เข้มขึ้น */
+    margin-top: 15px;
+    font-style: italic;
+    color: var(--text); /* ตรวจสอบให้ข้อความใน quote-box เป็นสี text */
+  }
+ </style>
+ </head>
+ <body>
   <div class="blur-bg"></div>
 
-<div id="loader">
-  <img id="loaderIcon" src="Images/XD.jpg" alt="Loading Icon" />
-  <div id="loadingText" class="dot-animation">กำลังโหลด</div>
-  <div id="welcomeText">ยินดีต้อนรับสู่เว็บไซต์</div>
-</div>
+  <div id="loader">
+    <img id="loaderIcon" src="Images/XD.jpg" alt="Loading Icon" />
+    <div id="loadingText">กำลังโหลด<span class="dot-animation"></span></div>
+    <div id="welcomeText">ยินดีต้อนรับสู่เว็บไซต์</div>
+  </div>
 
   <audio id="backgroundMusic" loop>
     <source src="Music/Citlali.mp3" type="audio/mpeg">
@@ -224,15 +264,17 @@
   </header>
 
   <nav class="menu-bar">
-    <button onclick="scrollToSection('gallery')" title="ภาพ"><i class="fas fa-image"></i></button>
-    <button onclick="scrollToSection('memories')" title="ความทรงจำ"><i class="fas fa-book"></i></button>
-    <button onclick="scrollToSection('quotes')" title="ข้อความ"><i class="fas fa-comment"></i></button>
-    <button onclick="scrollToSection('countdown')" title="เวลาจบ"><i class="fas fa-clock"></i></button>
-    <button id="toggleSoundButton" title="เปิด/ปิดเสียง"><i class="fas fa-volume-mute"></i></button>
-    <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.5">
+    <button id="menuToggle" aria-label="เมนูหลัก"><i class="fas fa-bars"></i></button>
+    <div class="menu-items hidden">
+      <button data-label="ภาพ" onclick="scrollToSection('gallery-main')"><i class="fas fa-image"></i> ภาพ</button>
+      <button data-label="ความทรงจำ" onclick="scrollToSection('memories-main')"><i class="fas fa-book"></i> ความทรงจำ</button>
+      <button data-label="ข้อความ" onclick="scrollToSection('quotes-main')"><i class="fas fa-comment"></i> ข้อความ</button>
+      <button data-label="เวลาจบ" onclick="scrollToSection('countdown')"><i class="fas fa-clock"></i> เวลาจบ</button>
+      <button id="toggleSoundButton" data-label="เสียง"><i class="fas fa-volume-mute"></i> เสียง (ปิด)</button>
+    </div>
   </nav>
 
-  <section id="gallery">
+  <section id="gallery-main">
     <h2>📷 รวมภาพความทรงจำ</h2>
     <div class="gallery">
       <img src="Images/XD.jpg" alt="ภาพ 1">
@@ -242,12 +284,12 @@
     </div>
   </section>
 
-  <section id="memories">
+  <section id="memories-main">
     <h2>📝 เรื่องราวที่จดจำได้</h2>
     <article><p id="randomMemory"></p></article>
   </section>
 
-  <section id="quotes">
+  <section id="quotes-main">
     <h2>💌 ข้อความถึงครูและเพื่อน</h2>
     <div class="quote-box" id="quoteBox"></div>
   </section>
@@ -256,55 +298,56 @@
     <h2>⏳ จนถึงวันจบการศึกษา</h2>
     <div id="countdownTimer"></div>
   </section>
-<section id="intro">
-  <h2>💐 กิจกรรมไหว้ครูคืออะไร?</h2>
-  <p>
-    กิจกรรมไหว้ครูเป็นประเพณีที่สำคัญของโรงเรียนในประเทศไทย โดยมีวัตถุประสงค์เพื่อแสดงความเคารพและระลึกถึงพระคุณของครู อาจารย์ผู้ให้ความรู้แก่นักเรียน 
-    พิธีจะจัดขึ้นในช่วงต้นปีการศึกษา พร้อมด้วยพานดอกไม้ ธูป เทียน และการกล่าวบทไหว้ครูจากนักเรียน
-  </p>
-</section>
 
-<section id="phaan">
-  <h2>🌸 พานไหว้ครูของพวกเรา</h2>
-  <p>
-    พานไหว้ครูในปีนี้เราได้ออกแบบร่วมกันในธีม "ความรัก ความผูกพัน และความขอบคุณ" ซึ่งพานของเราใช้ดอกไม้สด เช่น ดอกมะเขือ ดอกเข็ม และหญ้าแพรก
-    ที่ล้วนมีความหมายถึงปัญญา ความขยัน และความอ่อนน้อมถ่อมตน
-  </p>
-  <div class="gallery">
-    <img src="Images/phaan1.jpg" alt="พานไหว้ครู 1" />
-    <img src="Images/phaan2.jpg" alt="พานไหว้ครู 2" />
-    <img src="Images/phaan3.jpg" alt="พานไหว้ครู 3" />
-  </div>
-</section>
+  <section id="intro">
+    <h2>💐 กิจกรรมไหว้ครูคืออะไร?</h2>
+    <p>
+      กิจกรรมไหว้ครูเป็นประเพณีที่สำคัญของโรงเรียนในประเทศไทย โดยมีวัตถุประสงค์เพื่อแสดงความเคารพและระลึกถึงพระคุณของครู อาจารย์ผู้ให้ความรู้แก่นักเรียน
+      พิธีจะจัดขึ้นในช่วงต้นปีการศึกษา พร้อมด้วยพานดอกไม้ ธูป เทียน และการกล่าวบทไหว้ครูจากนักเรียน
+    </p>
+  </section>
 
-<section id="quotes">
-  <h2>📝 คำคมถึงคุณครู</h2>
-  <blockquote>
-    “ครูคือผู้จุดแสงสว่างแห่งปัญญาให้กับโลก”<br/>— ไม่ทราบผู้กล่าว
-  </blockquote>
-  <blockquote>
-    “ขอบคุณครูที่เป็นแรงบันดาลใจในการเดินทางตามฝันของเรา”<br/>— นักเรียนห้อง ปวช.1/IT
-  </blockquote>
-</section>
+  <section id="phaan">
+    <h2>🌸 พานไหว้ครูของพวกเรา</h2>
+    <p>
+      พานไหว้ครูในปีนี้เราได้ออกแบบร่วมกันในธีม "ความรัก ความผูกพัน และความขอบคุณ" ซึ่งพานของเราใช้ดอกไม้สด เช่น ดอกมะเขือ ดอกเข็ม และหญ้าแพรก
+      ที่ล้วนมีความหมายถึงปัญญา ความขยัน และความอ่อนน้อมถ่อมตน
+    </p>
+    <div class="gallery">
+      <img src="Images/phaan1.jpg" alt="พานไหว้ครู 1" />
+      <img src="Images/phaan2.jpg" alt="พานไหว้ครู 2" />
+      <img src="Images/phaan3.jpg" alt="พานไหว้ครู 3" />
+    </div>
+  </section>
 
-<section id="memories">
-  <h2>📷 ความทรงจำดีๆ ของเรา</h2>
-  <p>
-    ภาพความประทับใจจากวันงานไหว้ครูและเบื้องหลังการเตรียมพานจากพวกเราทุกคน ความร่วมมือ ความสนุกสนาน และมิตรภาพที่ไม่มีวันลืม
-  </p>
-  <div class="gallery">
-    <img src="Images/memory1.jpg" alt="เตรียมพาน" />
-    <img src="Images/memory2.jpg" alt="วันงาน" />
-    <img src="Images/memory3.jpg" alt="กลุ่มเพื่อน" />
-  </div>
-</section>
+  <section id="quotes-teacher">
+    <h2>📝 คำคมถึงคุณครู</h2>
+    <blockquote>
+      “ครูคือผู้จุดแสงสว่างแห่งปัญญาให้กับโลก”<br/>— ไม่ทราบผู้กล่าว
+    </blockquote>
+    <blockquote>
+      “ขอบคุณครูที่เป็นแรงบันดาลใจในการเดินทางตามฝันของเรา”<br/>— นักเรียนห้อง ปวช.1/IT
+    </blockquote>
+  </section>
 
-<section id="thankyou">
-  <h2>🙏 ขอบคุณจากใจ</h2>
-  <p>
-    ขอบคุณคุณครูทุกท่านที่อยู่เคียงข้างและชี้นำเราในเส้นทางชีวิต ขอให้ท่านมีความสุข สุขภาพแข็งแรง และเป็นแรงบันดาลใจให้กับนักเรียนตลอดไป 💖
-  </p>
-</section>
+  <section id="memories-event">
+    <h2>📷 ความทรงจำดีๆ ของเรา</h2>
+    <p>
+      ภาพความประทับใจจากวันงานไหว้ครูและเบื้องหลังการเตรียมพานจากพวกเราทุกคน ความร่วมมือ ความสนุกสนาน และมิตรภาพที่ไม่มีวันลืม
+    </p>
+    <div class="gallery">
+      <img src="Images/memory1.jpg" alt="เตรียมพาน" />
+      <img src="Images/memory2.jpg" alt="วันงาน" />
+      <img src="Images/memory3.jpg" alt="กลุ่มเพื่อน" />
+    </div>
+  </section>
+
+  <section id="thankyou">
+    <h2>🙏 ขอบคุณจากใจ</h2>
+    <p>
+      ขอบคุณคุณครูทุกท่านที่อยู่เคียงข้างและชี้นำเราในเส้นทางชีวิต ขอให้ท่านมีความสุข สุขภาพแข็งแรง และเป็นแรงบันดาลใจให้กับนักเรียนตลอดไป 💖
+    </p>
+  </section>
 
   <footer>
     <div class="footer-left">
@@ -317,96 +360,131 @@
   </footer>
 
   <script>
-  window.addEventListener('load', () => {
-    const loadingText = document.getElementById('loadingText');
-    const welcomeText = document.getElementById('welcomeText');
-    const loader = document.getElementById('loader');
+    document.addEventListener('DOMContentLoaded', () => {
+      const loadingText = document.getElementById('loadingText');
+      const welcomeText = document.getElementById('welcomeText');
+      const loader = document.getElementById('loader');
+      const backgroundMusic = document.getElementById('backgroundMusic');
+      const toggleSoundButton = document.getElementById('toggleSoundButton');
+      const menuToggle = document.getElementById('menuToggle');
+      const menuItems = document.querySelector('.menu-items');
 
-    const dots = ['', '.'];
-    let dotIndex = 0;
-    let loopCount = 0;
+      // Loader Logic
+      let dotCount = 0;
+      const loadingInterval = setInterval(() => {
+        dotCount = (dotCount + 1) % 4; // Cycles through 0, 1, 2, 3
+        const dots = '.'.repeat(dotCount);
+        loadingText.textContent = `กำลังโหลด${dots}`;
+      }, 700);
 
-    // เปลี่ยนข้อความทุก 700ms ให้ดูสบายตามากขึ้น
-    const loadingInterval = setInterval(() => {
-      loadingText.textContent = 'กำลังโหลด' + dots[dotIndex];
-      dotIndex++;
-
-      if (dotIndex >= dots.length) {
-        dotIndex = 0;
-        loopCount++;
-      }
-
-      if (loopCount === 3) { // จบที่รอบที่ 3 ของ “...”
-        clearInterval(loadingInterval);
-
-        // ซ่อน “กำลังโหลด...” และแสดง “ยินดีต้อนรับ”
-        loadingText.style.display = 'none';
-        welcomeText.style.display = 'block';
+      // Simulate loading time and then transition
+      setTimeout(() => {
+        clearInterval(loadingInterval); // Stop dot animation
+        loadingText.style.opacity = '0';
+        setTimeout(() => {
+          loadingText.style.display = 'none';
+          welcomeText.style.display = 'block';
+          setTimeout(() => {
+            welcomeText.style.opacity = '1';
+          }, 50); // Small delay to trigger transition
+        }, 1000); // Wait for loadingText to fade out
 
         setTimeout(() => {
-          welcomeText.style.opacity = '1'; // fade in
-        }, 100);
+          welcomeText.style.opacity = '0';
+          setTimeout(() => {
+            loader.style.opacity = '0';
+            loader.style.visibility = 'hidden';
+            document.body.classList.remove('no-scroll');
+            // Play music after loader hides
+            backgroundMusic.muted = false; // Unmute by default after load
+            backgroundMusic.play().catch(e => console.log("Music play failed:", e));
+            toggleSoundButton.innerHTML = '<i class="fas fa-volume-up"></i> เสียง (เปิด)';
+          }, 1000); // Wait for welcomeText to fade out
+        }, 3500); // Display welcome text for 2.5 seconds (3.5s - 1s fade in)
+      }, 3000); // Total "loading" time before welcome message appears
 
-        setTimeout(() => {
-          welcomeText.style.opacity = '0'; // fade out
-        }, 3000);
+      // Menu Toggle Logic
+      menuToggle.addEventListener('click', () => {
+        menuItems.classList.toggle('hidden');
+      });
 
-        setTimeout(() => {
-          loader.style.opacity = '0';
-          loader.style.visibility = 'hidden';
-        }, 4500);
-      }
-    }, 700); // ความเร็ว 700ms ต่อจุด (ไม่เร็วเกินไป)
-  });
+      // Menu Item Tooltip Logic
+      document.querySelectorAll(".menu-items button").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const label = btn.getAttribute("data-label");
+          const tempTooltip = document.createElement("div");
+          tempTooltip.innerText = label;
+          tempTooltip.style.position = "fixed";
+          // ปรับตำแหน่ง tooltip ให้สัมพันธ์กับตำแหน่งเมนูใหม่
+          const btnRect = btn.getBoundingClientRect();
+          tempTooltip.style.left = (btnRect.right + 10) + "px"; // 10px ขวาจากปุ่ม
+          tempTooltip.style.top = btnRect.top + "px";
+          tempTooltip.style.background = "black";
+          tempTooltip.style.color = "white";
+          tempTooltip.style.padding = "5px 10px";
+          tempTooltip.style.borderRadius = "6px";
+          tempTooltip.style.zIndex = "9999";
+          tempTooltip.style.transition = "opacity 0.3s";
+          document.body.appendChild(tempTooltip);
 
-    const memories = [
-      "วันที่เราร้องไห้กับครูครั้งแรก",
-      "เวลาที่เราทำพานไหว้ครูด้วยกัน",
-      "ตอนพักกลางวันสุดท้ายก่อนสอบไฟนอล"
-    ];
+          setTimeout(() => {
+            tempTooltip.style.opacity = "0";
+            setTimeout(() => tempTooltip.remove(), 500);
+          }, 1000);
+        });
+      });
 
-    const quotes = [
-      "ขอบคุณครูที่ไม่เคยละทิ้งพวกเรา",
-      "แม้เราจะเรียนสายไอที แต่หัวใจเราอบอุ่นเหมือนศิลป์",
-      "มิตรภาพ 3 ปี ไม่มีวันลืม"
-    ];
+      // Content for sections
+      const memories = [
+        "วันที่เราร้องไห้กับครูครั้งแรก",
+        "เวลาที่เราทำพานไหว้ครูด้วยกัน",
+        "ตอนพักกลางวันสุดท้ายก่อนสอบไฟนอล"
+      ];
 
-    document.getElementById("randomMemory").innerText = memories[Math.floor(Math.random() * memories.length)];
-    document.getElementById("quoteBox").innerText = quotes[Math.floor(Math.random() * quotes.length)];
+      const quotes = [
+        "ขอบคุณครูที่ไม่เคยละทิ้งพวกเรา",
+        "แม้เราจะเรียนสายไอที แต่หัวใจเราอบอุ่นเหมือนศิลป์",
+        "มิตรภาพ 3 ปี ไม่มีวันลืม"
+      ];
 
-    const gradDate = new Date("2026-03-31T23:59:59").getTime();
-    setInterval(() => {
-      const now = new Date().getTime();
-      const distance = gradDate - now;
-      const days = Math.floor(distance / (1000*60*60*24));
-      const hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
-      const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
-      const seconds = Math.floor((distance % (1000*60)) / 1000);
-      document.getElementById("countdownTimer").innerText = `เหลืออีก ${days} วัน ${hours} ชั่วโมง ${minutes} นาที ${seconds} วินาที`;
-    }, 1000);
+      document.getElementById("randomMemory").innerText = memories[Math.floor(Math.random() * memories.length)];
+      document.getElementById("quoteBox").innerText = quotes[Math.floor(Math.random() * quotes.length)];
 
-    const audio = document.getElementById('backgroundMusic');
-    const toggleBtn = document.getElementById('toggleSoundButton');
-    const volumeSlider = document.getElementById('volumeSlider');
-    audio.volume = 0.25;
-    audio.muted = true;
+      // Countdown Timer
+      const gradDate = new Date("2026-03-31T23:59:59").getTime();
+      const countdownTimerElement = document.getElementById("countdownTimer");
+      setInterval(() => {
+        const now = new Date().getTime();
+        const distance = gradDate - now;
 
-    document.body.addEventListener('click', () => {
-      audio.play().catch(() => {});
-    }, { once: true });
+        if (distance < 0) {
+          countdownTimerElement.innerText = "ถึงวันจบการศึกษาแล้ว!";
+          return;
+        }
 
-    toggleBtn.onclick = () => {
-      audio.muted = !audio.muted;
-      toggleBtn.innerHTML = audio.muted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
-    };
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        countdownTimerElement.innerText = `เหลืออีก ${days} วัน ${hours} ชั่วโมง ${minutes} นาที ${seconds} วินาที`;
+      }, 1000);
 
-    volumeSlider.oninput = (e) => {
-      audio.volume = e.target.value;
-    };
+      // Music Toggle
+      toggleSoundButton.onclick = () => {
+        backgroundMusic.muted = !backgroundMusic.muted;
+        toggleSoundButton.innerHTML = backgroundMusic.muted ? '<i class="fas fa-volume-mute"></i> เสียง (ปิด)' : '<i class="fas fa-volume-up"></i> เสียง (เปิด)';
+      };
 
-    function scrollToSection(id) {
-      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-    }
+      // Function to scroll to section
+      window.scrollToSection = (id) => {
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+          // Hide menu items after clicking a menu button
+          menuItems.classList.add('hidden');
+        }
+      };
+    });
   </script>
-</body>
-</html>
+ </body>
+ </html>
