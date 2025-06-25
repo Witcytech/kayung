@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>เรื่องราวความทรงจำของเรา</title>
-    <link rel="icon" type="image/x-icon" href="/Images/Kik.jpg">
+    <link rel="icon" type="image/x-xicon" href="/Images/Kik.jpg">
     <link href="https://fonts.googleapis.com/css2?family=Mali:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
@@ -99,37 +99,37 @@
             z-index: 991; /* ให้ Header อยู่เหนือเนื้อหาปกติ แต่อยู่ใต้ Announcement Banner ที่ sticky */
         }
 
-            /* สไตล์สำหรับ Gallery ทั่วไป (เช่น พานไหว้ครู, ช่วงเวลาแห่งความสุข) */
-    .gallery {
-        display: grid; /* ใช้ Grid เพื่อจัดเรียงรูปภาพ */
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* ปรับคอลัมน์ให้ยืดหยุ่น */
-        gap: 20px; /* ระยะห่างระหว่างรูปภาพ */
-        margin-top: 20px; /* ระยะห่างด้านบน */
-    }
-
-    .gallery img {
-        width: 100%; /* ทำให้รูปภาพเต็มความกว้างของ grid item */
-        height: 250px; /* กำหนดความสูงคงที่ */
-        object-fit: cover; /* ครอบตัดรูปภาพให้เต็มพื้นที่โดยไม่บิดเบี้ยว */
-        border-radius: 10px; /* มุมโค้งมน */
-        box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* เพิ่มเงา */
-        transition: transform 0.3s ease, box-shadow 0.3s ease; /* เพิ่ม transition เมื่อ hover */
-    }
-
-    .gallery img:hover {
-        transform: scale(1.03); /* ขยายขนาดเล็กน้อยเมื่อ hover */
-        box-shadow: 0 6px 15px rgba(0,0,0,0.3); /* เพิ่มเงาเมื่อ hover */
-    }
-
-    /* Responsive adjustments สำหรับ Gallery บนมือถือ */
-    @media (max-width: 768px) {
+        /* สไตล์สำหรับ Gallery ทั่วไป (เช่น พานไหว้ครู, ช่วงเวลาแห่งความสุข) */
         .gallery {
-            grid-template-columns: 1fr; /* บนมือถือแสดงเป็น 1 คอลัมน์ */
+            display: grid; /* ใช้ Grid เพื่อจัดเรียงรูปภาพ */
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* ปรับคอลัมน์ให้ยืดหยุ่น */
+            gap: 20px; /* ระยะห่างระหว่างรูปภาพ */
+            margin-top: 20px; /* ระยะห่างด้านบน */
         }
+
         .gallery img {
-            height: 200px; /* ลดความสูงของรูปภาพบนมือถือ */
+            width: 100%; /* ทำให้รูปภาพเต็มความกว้างของ grid item */
+            height: 250px; /* กำหนดความสูงคงที่ */
+            object-fit: cover; /* ครอบตัดรูปภาพให้เต็มพื้นที่โดยไม่บิดเบี้ยว */
+            border-radius: 10px; /* มุมโค้งมน */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* เพิ่มเงา */
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* เพิ่ม transition เมื่อ hover */
         }
-    }
+
+        .gallery img:hover {
+            transform: scale(1.03); /* ขยายขนาดเล็กน้อยเมื่อ hover */
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3); /* เพิ่มเงาเมื่อ hover */
+        }
+
+        /* Responsive adjustments สำหรับ Gallery บนมือถือ */
+        @media (max-width: 768px) {
+            .gallery {
+                grid-template-columns: 1fr; /* บนมือถือแสดงเป็น 1 คอลัมน์ */
+            }
+            .gallery img {
+                height: 200px; /* ลดความสูงของรูปภาพบนมือถือ */
+            }
+        }
         /* สไตล์สำหรับ Section ทั่วไป */
         section {
             max-width: 900px; /* ความกว้างสูงสุด */
@@ -317,10 +317,15 @@
 
         /* จุดบอกตำแหน่งสไลด์ (indicators) */
         .carousel-indicators {
+            position: absolute; /* เปลี่ยนเป็น absolute เพื่อวางตำแหน่งภายใน container */
+            bottom: 15px; /* เลื่อนลงมาด้านล่าง */
+            left: 50%; /* จัดกึ่งกลางแนวนอน */
+            transform: translateX(-50%); /* ปรับให้กึ่งกลางจริง */
             display: flex; /* ใช้ flexbox */
             justify-content: center; /* จัดกึ่งกลาง */
-            margin-top: 15px;
+            width: 100%; /* ให้เต็มความกว้างของ container เพื่อจัดกึ่งกลางได้ง่าย */
             gap: 10px; /* ระยะห่างระหว่างจุด */
+            z-index: 10; /* ให้จุดอยู่เหนือรูปภาพ */
         }
 
         .carousel-indicator {
@@ -384,6 +389,17 @@
             transform: scale(1.2); /* ขยายขนาดเล็กน้อย */
         }
 
+        /* สไตล์สำหรับ Social Media Container */
+        .social-media {
+            display: flex; /* ใช้ flexbox เพื่อจัดเรียงไอคอน */
+            gap: 20px; /* เพิ่มระยะห่างระหว่างไอคอนตรงนี้ */
+        }
+
+        /* เพิ่มขนาดไอคอน Social Media */
+        .social-media a i {
+            font-size: 2em; /* ปรับขนาดไอคอนให้ใหญ่ขึ้น */
+        }
+
         /* สไตล์สำหรับข้อความ Loader และ Welcome */
         #loadingText,
         #welcomeText {
@@ -440,73 +456,73 @@
         }
 
         /* สไตล์สำหรับ Audio Control Container */
-    .audio-control-container {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-    }
+        .audio-control-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
 
-    /* สไตล์สำหรับ Volume Control Slider */
-    #volumeControl {
-        background: rgba(29, 53, 87, 0.9);
-        border: 1px solid var(--primary);
-        border-radius: 8px;
-        padding: 5px 10px;
-        margin-top: 5px; /* ระยะห่างจากปุ่มเสียง */
-        opacity: 1; /* เริ่มต้นให้แสดง */
-        transition: opacity 0.3s ease, max-height 0.3s ease;
-        max-height: 50px; /* กำหนด max-height เพื่อให้ transition ทำงาน */
-        overflow: hidden; /* ซ่อนส่วนเกินเมื่อ max-height ลดลง */
-    }
+        /* สไตล์สำหรับ Volume Control Slider */
+        #volumeControl {
+            background: rgba(29, 53, 87, 0.9);
+            border: 1px solid var(--primary);
+            border-radius: 8px;
+            padding: 5px 10px;
+            margin-top: 5px; /* ระยะห่างจากปุ่มเสียง */
+            opacity: 1; /* เริ่มต้นให้แสดง */
+            transition: opacity 0.3s ease, max-height 0.3s ease;
+            max-height: 50px; /* กำหนด max-height เพื่อให้ transition ทำงาน */
+            overflow: hidden; /* ซ่อนส่วนเกินเมื่อ max-height ลดลง */
+        }
 
-    #volumeControl.volume-control-hidden {
-        opacity: 0;
-        max-height: 0;
-        padding: 0 10px;
-        border: none;
-        pointer-events: none; /* ไม่ตอบสนองต่อการคลิกเมื่อซ่อน */
-    }
+        #volumeControl.volume-control-hidden {
+            opacity: 0;
+            max-height: 0;
+            padding: 0 10px;
+            border: none;
+            pointer-events: none; /* ไม่ตอบสนองต่อการคลิกเมื่อซ่อน */
+        }
 
-    #volumeSlider {
-        width: 100%;
-        -webkit-appearance: none; /* ลบ default styles ของ browser */
-        height: 8px;
-        background: var(--accent-light); /* สีของ track */
-        border-radius: 5px;
-        outline: none;
-        cursor: pointer;
-    }
+        #volumeSlider {
+            width: 100%;
+            -webkit-appearance: none; /* ลบ default styles ของ browser */
+            height: 8px;
+            background: var(--accent-light); /* สีของ track */
+            border-radius: 5px;
+            outline: none;
+            cursor: pointer;
+        }
 
-    /* Thumb (ตัวเลื่อน) ของ Slider */
-    #volumeSlider::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        appearance: none;
-        width: 20px;
-        height: 20px;
-        background: var(--text); /* สีของ thumb */
-        border: 2px solid var(--primary);
-        border-radius: 50%;
-        cursor: pointer;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-        transition: background 0.3s ease;
-    }
+        /* Thumb (ตัวเลื่อน) ของ Slider */
+        #volumeSlider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--text); /* สีของ thumb */
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            transition: background 0.3s ease;
+        }
 
-    #volumeSlider::-moz-range-thumb {
-        width: 20px;
-        height: 20px;
-        background: var(--text);
-        border: 2px solid var(--primary);
-        border-radius: 50%;
-        cursor: pointer;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-        transition: background 0.3s ease;
-    }
+        #volumeSlider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: var(--text);
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            transition: background 0.3s ease;
+        }
 
-    #volumeSlider::-webkit-slider-thumb:hover,
-    #volumeSlider::-moz-range-thumb:hover {
-        background: #ffffff; /* สีเมื่อ hover */
-    }
+        #volumeSlider::-webkit-slider-thumb:hover,
+        #volumeSlider::-moz-range-thumb:hover {
+            background: #ffffff; /* สีเมื่อ hover */
+        }
 
         @keyframes slideInFromTop {
             from {
@@ -541,6 +557,10 @@
             .social-media {
                 margin-top: 15px;
             }
+            /* ปรับขนาดไอคอน Social Media ในมือถือ */
+            .social-media a i {
+                font-size: 1.8em; /* ปรับขนาดไอคอนให้เล็กลงเล็กน้อยสำหรับมือถือ */
+            }
         }
     </style>
 </head>
@@ -572,7 +592,6 @@
         <button data-label="หน้าหลัก" onclick="scrollToSection('intro')"><i class="fas fa-home"></i> หน้าหลัก</button>
         <button data-label="ภาพความทรงจำ" onclick="scrollToSection('gallery-main')"><i class="fas fa-image"></i> ภาพความทรงจำ</button>
         <button data-label="เรื่องราว" onclick="scrollToSection('our-story')"><i class="fas fa-book-open"></i> เรื่องราวของเรา</button>
-        <button data-label="คำกล่าวจากใจ" onclick="scrollToSection('quotes-main')"><i class="fas fa-comment"></i> คำกล่าวจากใจ</button>
         <button data-label="วันจบการศึกษา" onclick="scrollToSection('countdown')"><i class="fas fa-clock"></i> วันจบการศึกษา</button>
         <div class="audio-control-container">
             <button id="toggleSoundButton" data-label="เสียง"><i class="fas fa-volume-up"></i> เสียง</button>
@@ -629,22 +648,6 @@
         <p>เราหวังว่าข้อความเหล่านี้จะสามารถสื่อถึงความรู้สึกของเราได้ไม่มากก็น้อย</p>
     </section>
 
-    <section id="countdown">
-        <h2>⏳ เหลือเวลาอีก...</h2>
-        <p>จนถึงวันสุดท้ายที่เราจะได้อยู่ด้วยกันในรั้วโรงเรียนนี้</p>
-        <div id="countdownTimer" style="font-size: 2.2em; font-weight: bold; margin-top: 20px; color: var(--accent-light);"></div>
-    </section>
-
-    <section id="quotes-teacher">
-        <h2>💡 คำคมดีๆ ถึงคุณครู</h2>
-        <blockquote>
-            “ครูคือผู้จุดแสงสว่างแห่งปัญญาให้กับโลก และเป็นผู้นำทางชีวิตให้เราก้าวเดิน”<br/>— ไม่ทราบผู้กล่าว
-        </blockquote>
-        <blockquote>
-            “ขอบคุณคุณครูทุกท่านที่เปรียบเสมือนดวงดาวที่ส่องนำทางให้เราไม่หลงทาง ขอให้ครูมีความสุข สุขภาพแข็งแรง และเป็นแรงบันดาลใจให้ลูกศิษย์ตลอดไป”<br/>— นักเรียนห้อง ปวช.1/IT
-        </blockquote>
-    </section>
-
     <section id="memories-event">
         <h2>💖 ช่วงเวลาแห่งความสุข</h2>
         <p>
@@ -654,6 +657,12 @@
             <img src="Images/XD.jpg" alt="เตรียมพาน" />
             <img src="Images/XD.jpg" alt="วันงาน" />
         </div>
+    </section>
+
+    <section id="countdown">
+        <h2>⏳ เหลือเวลาอีก...</h2>
+        <p>จนถึงวันสุดท้ายที่เราจะได้อยู่ด้วยกันในรั้วโรงเรียนนี้</p>
+        <div id="countdownTimer" style="font-size: 2.2em; font-weight: bold; margin-top: 20px; color: var(--accent-light);"></div>
     </section>
 
     <section id="thankyou">
@@ -667,7 +676,7 @@
 
     <footer>
         <div class="footer-left">
-            <img src="Images/XD.jpg" alt="Witcytech Profile" class="footer-profile-img">
+            <img src="Images/Profile.webp" alt="Witcytech Profile" class="footer-profile-img">
             <p>&copy; 2568 Witcytech สงวนลิขสิทธิ์</p>
         </div>
         <div class="social-media">
@@ -693,52 +702,60 @@
             const countdownTimerElement = document.getElementById("countdownTimer");
             const announcementBanner = document.getElementById('announcementBanner');
             const announcementText = document.getElementById('announcementText'); // เพิ่ม element สำหรับข้อความใน banner
-        const volumeControl = document.getElementById('volumeControl');
-        const volumeSlider = document.getElementById('volumeSlider');
+            const volumeControl = document.getElementById('volumeControl');
+            const volumeSlider = document.getElementById('volumeSlider');
 
-        // ตั้งค่าเริ่มต้นของเพลง
-        backgroundMusic.volume = 0.5; // ตั้งค่าเริ่มต้นที่ 50%
-        volumeSlider.value = 0.5; // ตั้งค่า slider ให้ตรงกับระดับเสียงเริ่มต้น
+            // ตั้งค่าเริ่มต้นของเพลง
+            backgroundMusic.volume = 0.5; // ตั้งค่าเริ่มต้นที่ 50%
+            volumeSlider.value = 0.5; // ตั้งค่า slider ให้ตรงกับระดับเสียงเริ่มต้น
 
-        // --- Music Toggle and Volume Control (เปิด-ปิดเพลงและควบคุมระดับเสียง) ---
-        toggleSoundButton.onclick = (event) => {
-            event.stopPropagation(); // หยุดการส่ง event ไปยัง document
-            // สลับการแสดงผลของ Volume Control
-            volumeControl.classList.toggle('volume-control-hidden');
+            // --- Music Toggle and Volume Control (เปิด-ปิดเพลงและควบคุมระดับเสียง) ---
+            toggleSoundButton.onclick = (event) => {
+                event.stopPropagation(); // หยุดการส่ง event ไปยัง document
+                // สลับการแสดงผลของ Volume Control
+                volumeControl.classList.toggle('volume-control-hidden');
 
-            if (backgroundMusic.muted) {
-                backgroundMusic.muted = false;
-                backgroundMusic.play().catch(e => console.log("Music play failed:", e));
-                toggleSoundButton.innerHTML = '<i class="fas fa-volume-up"></i> เสียง';
-            } else if (backgroundMusic.volume === 0) { // ถ้าเสียงเป็น 0 ให้เปิดเสียงกลับไปที่ค่าเดิม (ก่อนที่จะ mute)
-                 backgroundMusic.volume = volumeSlider.value > 0 ? volumeSlider.value : 0.5; // กลับไปที่ค่า slider หรือ 0.5 ถ้า slider เป็น 0
-                 backgroundMusic.muted = false;
-                 backgroundMusic.play().catch(e => console.log("Music play failed:", e));
-                 toggleSoundButton.innerHTML = '<i class="fas fa-volume-up"></i> เสียง';
-            } else {
-                backgroundMusic.muted = true; // ปิดเสียง
-                toggleSoundButton.innerHTML = '<i class="fas fa-volume-mute"></i> เสียง';
-            }
-        };
+                if (backgroundMusic.muted) {
+                    backgroundMusic.muted = false;
+                    backgroundMusic.volume = volumeSlider.value > 0 ? volumeSlider.value : 0.5; // กลับไปที่ค่า slider หรือ 0.5 ถ้า slider เป็น 0
+                    backgroundMusic.play().catch(e => console.log("Music play failed:", e));
+                    toggleSoundButton.innerHTML = '<i class="fas fa-volume-up"></i> เสียง';
+                } else if (backgroundMusic.volume === 0) { // ถ้าเสียงเป็น 0 ให้เปิดเสียงกลับไปที่ค่าเดิม (ก่อนที่จะ mute)
+                    backgroundMusic.muted = false;
+                    backgroundMusic.volume = volumeSlider.value > 0 ? volumeSlider.value : 0.5; // กลับไปที่ค่า slider หรือ 0.5 ถ้า slider เป็น 0
+                    backgroundMusic.play().catch(e => console.log("Music play failed:", e));
+                    toggleSoundButton.innerHTML = '<i class="fas fa-volume-up"></i> เสียง';
+                }
+                else {
+                    backgroundMusic.muted = true; // ปิดเสียง
+                    toggleSoundButton.innerHTML = '<i class="fas fa-volume-mute"></i> เสียง';
+                }
+            };
 
-        // เมื่อปรับ Volume Slider
-        volumeSlider.oninput = () => {
-            backgroundMusic.volume = volumeSlider.value;
-            if (backgroundMusic.volume === 0) {
-                backgroundMusic.muted = true;
-                toggleSoundButton.innerHTML = '<i class="fas fa-volume-off"></i> เสียง'; // เปลี่ยนเป็นไอคอนลำโพงปิดเสียงสนิท
-            } else {
-                backgroundMusic.muted = false;
-                toggleSoundButton.innerHTML = '<i class="fas fa-volume-up"></i> เสียง';
-            }
-        };
+            // เมื่อปรับ Volume Slider
+            volumeSlider.oninput = (event) => {
+                event.stopPropagation(); // หยุดการส่ง event ไปยัง document
+                backgroundMusic.volume = volumeSlider.value;
+                if (backgroundMusic.volume == 0) { // ใช้ == แทน === เพราะ value อาจเป็น string
+                    backgroundMusic.muted = true;
+                    toggleSoundButton.innerHTML = '<i class="fas fa-volume-off"></i> เสียง'; // เปลี่ยนเป็นไอคอนลำโพงปิดเสียงสนิท
+                } else {
+                    backgroundMusic.muted = false;
+                    toggleSoundButton.innerHTML = '<i class="fas fa-volume-up"></i> เสียง';
+                }
+            };
 
-        // เพิ่มการตรวจสอบการคลิกนอกเมนูเพื่อซ่อนแถบเสียง
-        document.addEventListener('click', (event) => {
-            if (!mainMenuBar.contains(event.target) && !volumeControl.contains(event.target)) {
-                volumeControl.classList.add('volume-control-hidden');
-            }
-        });
+            // เพิ่มการตรวจสอบการคลิกนอกเมนูเพื่อซ่อนแถบเสียง
+            document.addEventListener('click', (event) => {
+                // ตรวจสอบว่าคลิกนอก menuToggle, menuItems และ volumeControl
+                const isClickInsideMenuToggle = menuToggle.contains(event.target);
+                const isClickInsideMenuItems = menuItems.contains(event.target);
+                const isClickInsideVolumeControl = volumeControl.contains(event.target);
+
+                if (!isClickInsideMenuToggle && !isClickInsideMenuItems && !isClickInsideVolumeControl) {
+                    volumeControl.classList.add('volume-control-hidden');
+                }
+            });
 
             // --- Loader Logic (หน้าจอโหลด) ---
             let dotCount = 0;
@@ -871,13 +888,6 @@
             const countdownInterval = setInterval(updateCountdown, 1000); // เรียกใช้ updateCountdown ทุก 1 วินาที
             updateCountdown();
 
-            // --- Music Toggle (เปิด-ปิดเพลง) ---
-            toggleSoundButton.onclick = () => {
-                backgroundMusic.muted = !backgroundMusic.muted;
-                // เปลี่ยนไอคอนและข้อความบนปุ่มตามสถานะเสียง
-                toggleSoundButton.innerHTML = backgroundMusic.muted ?
-                    '<i class="fas fa-volume-mute"></i> เสียง' : '<i class="fas fa-volume-up"></i> เสียง';
-            };
             // --- Scroll to Section Function (ฟังก์ชันเลื่อนไปยัง Section) ---
             window.scrollToSection = (id) => {
                 const element = document.getElementById(id);
