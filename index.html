@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Mali:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
+        /* ตัวแปรสี */
         :root {
             --primary: #0A2463;
             --secondary: #E0E6EF;
@@ -21,6 +22,7 @@
             --accent-dark: #071731;
         }
 
+        /* รีเซ็ต CSS พื้นฐาน */
         * {
             margin: 0;
             padding: 0;
@@ -28,6 +30,7 @@
             scroll-behavior: smooth;
         }
 
+        /* สไตล์ body */
         body {
             font-family: 'Mali', sans-serif;
             background-color: var(--background);
@@ -42,12 +45,14 @@
             }
         }
 
+        /* คลาสสำหรับปิดการเลื่อน */
         .no-scroll {
             overflow: hidden;
         }
 
+        /* พื้นหลังเบลอ */
         .blur-bg {
-            background: url('Images/Background.jpg') center/cover no-repeat;
+            background: url('Images/Background.jpg') center/cover no-repeat; /* Placeholder for Images/Background.jpg */
             filter: blur(8px);
             position: fixed;
             top: 0;
@@ -57,6 +62,7 @@
             z-index: -1;
         }
 
+        /* ตัวโหลดหน้าเว็บ */
         #loader {
             position: fixed;
             top: 0;
@@ -101,6 +107,7 @@
             }
         }
 
+        /* ส่วนหัว */
         header {
             text-align: center;
             padding: 30px 20px;
@@ -111,36 +118,60 @@
             z-index: 991;
         }
 
-        .gallery {
+        /* แกลเลอรีภาพรวม */
+        .grid-gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
-            margin-top: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 40px auto;
         }
 
-        .gallery img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
+        .gallery-item {
+            position: relative;
+            background-color: var(--card);
             border-radius: 10px;
+            overflow: hidden;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
         }
 
-        .gallery img:hover {
+        .gallery-item:hover {
             transform: scale(1.03);
             box-shadow: 0 6px 15px rgba(0,0,0,0.3);
         }
 
-        @media (max-width: 768px) {
-            .gallery {
-                grid-template-columns: 1fr;
-            }
-            .gallery img {
-                height: 200px;
-            }
+        .gallery-item img,
+        .gallery-item video {
+            width: 100%;
+            height: 200px; /* ปรับความสูงให้พอดี */
+            object-fit: cover;
+            display: block;
         }
-        
+
+        .gallery-item .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            font-size: 2em;
+        }
+
+        .gallery-item:hover .overlay {
+            opacity: 1;
+        }
+
+        /* ส่วนเนื้อหาหลัก */
         section {
             max-width: 900px;
             margin: 40px auto;
@@ -150,6 +181,7 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
 
+        /* แถบเมนู */
         nav.menu-bar {
             position: fixed;
             top: 20px;
@@ -234,6 +266,7 @@
             color: var(--footer-text-hover);
         }
 
+        /* Media Queries สำหรับมือถือและแท็บเล็ต */
         @media (max-width: 768px) {
             nav.menu-bar {
                 top: 75px;
@@ -263,8 +296,13 @@
             header p {
                 font-size: 0.9em;
             }
+
+            .grid-gallery {
+                grid-template-columns: 1fr;
+            }
         }
         
+        /* Carousel */
         .carousel-container {
             position: relative;
             max-width: 800px;
@@ -279,8 +317,11 @@
             transition: transform 0.5s ease-in-out;
         }
 
-        .carousel-slides img {
+        .carousel-slides img,
+        .carousel-slides video {
             width: 100%;
+            height: 450px; /* ปรับความสูงสำหรับ Carousel */
+            object-fit: cover;
             display: block;
             border-radius: 10px;
             flex-shrink: 0;
@@ -339,6 +380,7 @@
             transform: scale(1.2);
         }
         
+        /* Pop-up Modal ทั่วไป */
         .popup-modal {
             display: none;
             position: fixed;
@@ -370,7 +412,8 @@
             justify-content: center;
         }
 
-        .popup-modal-content img {
+        .popup-modal-content img,
+        .popup-modal-content video {
             max-width: 100%;
             max-height: 80vh;
             height: auto;
@@ -402,6 +445,7 @@
             to { opacity: 1; transform: scale(1); }
         }
 
+        /* ส่วนท้าย */
         footer {
             background-color: var(--footer-bg);
             color: var(--footer-text);
@@ -453,6 +497,7 @@
             font-size: 2em;
         }
 
+        /* ข้อความโหลดและข้อความต้อนรับ */
         #loadingText,
         #welcomeText {
             transition: opacity 1s ease;
@@ -465,6 +510,7 @@
             font-size: 26px;
         }
 
+        /* กล่องคำคม */
         .quote-box {
             padding: 15px;
             border-left: 5px solid var(--primary);
@@ -475,6 +521,7 @@
             border-radius: 8px;
         }
 
+        /* แถบประกาศ */
         .announcement-banner {
             background-color: var(--accent-light);
             color: var(--background);
@@ -549,13 +596,14 @@
     <div class="blur-bg"></div>
 
     <div id="loader">
-        <img id="loaderIcon" src="Images/Kik.jpg" alt="Loading Icon" />
+        <img id="loaderIcon" src="Images/Kik.jpg" alt="Loading Icon" /> <!-- Placeholder for Images/Kik.jpg -->
         <div id="loadingText">กำลังโหลด<span class="dot-animation"></span></div>
         <div id="welcomeText">ยินดีต้อนรับสู่เว็บไซต์เรื่องราวของพวกเรา</div>
     </div>
 
     <audio id="backgroundMusic" loop>
-        <source src="Music/Boyd.mp3" type="audio/mpeg">
+        <source src="Music/Boyd.mp3" type="audio/mpeg"> <!-- Placeholder for Music/Boyd.mp3 -->
+        Your browser does not support the audio element.
     </audio>
 
     <header>
@@ -572,7 +620,8 @@
     <div class="menu-items">
         <button data-label="บทนำ" onclick="scrollToSection('intro')"><i class="fas fa-home"></i> บทนำ</button>
         <button data-label="ถึงคุณครู" onclick="scrollToSection('kik')"><i class="fas fa-heart"></i> ถึงคุณครู</button>
-        <button data-label="ความทรงจำ" onclick="scrollToSection('memories')"><i class="fas fa-image"></i> ความทรงจำ</button>
+        <button data-label="ความทรงจำ" onclick="scrollToSection('memories')"><i class="fas fa-images"></i> ความทรงจำ</button>
+        <button data-label="แกลเลอรี" onclick="scrollToSection('gallery')"><i class="fas fa-image"></i> แกลเลอรี</button>
         <button id="toggleSoundButton" data-label="เสียง"><i class="fas fa-volume-up"></i> เสียง</button>
     </div>
 </nav>
@@ -584,7 +633,7 @@
 
     <section id="kik">
         <h2>💌 ถึงคุณครูที่ปรึกษา <span style="font-weight: bold; color: var(--accent-light);">"แม่กิ๊ก"</span></h2>
-        <p>เนื่องในวันครูปีนี้ พวกหนูขอถือโอกาสนี้ขอบคุณครูที่อยู่กับพวกเรามาตลอด 3 ปีที่ผ่านมา<br><br>แม้ว่าในช่วงเวลาที่อยู่ด้วยกัน พวกหนูจะดื้อ ไม่ค่อยฟังคำสอน หรือบางครั้งทำให้ครูต้องปวดหัว ถูกตำหนิบ่อย ๆ — แต่สิ่งที่ครูทำมาตลอดไม่เคยสูญเปล่าเลยค่ะ<br>ขอบคุณที่ไม่ยอมแพ้ ขอบคุณที่คอยตักเตือน สั่งสอน และอดทนกับพวกหนูเสมอมา ครูทำหน้าที่ของครูที่ปรึกษาได้ดีที่สุดอย่างไม่มีข้อกังขาเลยค่ะ<br><br>หลังจากนี้ พวกหนูขอให้ครูมีแต่ความสุข พบเจอแต่สิ่งดี ๆ สุขภาพแข็งแรง และมีรอยยิ้มในทุกวัน พวกหนูจะโอบกอดครูไว้ในใจเสมอนะคะ 😊</p>
+        <p>เนื่องในวันครูปีนี้ พวกหนูขอถือโอกาสนี้ขอบคุณครูที่อยู่กับพวกเรามาตลอด 3 ปีที่ผ่านมา<br><br>แม้ว่าในช่วงเวลาที่อยู่ด้วยกัน พวกหนูจะดื้อ ไม่ค่อยฟังคำสอน หรือบางครั้งทำให้ครูต้องปวดหัว ถูกตำหนิบ่อย ๆ — แต่สิ่งที่ครูทำมาตลอดไม่เคยสูญเปล่าเลยค่ะ<br>ขอบคุณที่ไม่ยอมแพ้ ขอบคุณที่คอยตักเตือน สั่งสอน และอดทนกับพวกหนูเสมอมา ครูทำหน้าที่ของครูที่ปรึกษาได้ดีที่สุดอย่างไม่มีข้อกังขาเลยค่ะ<br><br>หลังจากนี้ พวกหนูขอให้ครูมีแต่ความสุข พบเจอแต่สิ่งดี ๆ สุขภาพแข็งแรง และมีรอยยิ้มในทุกวัน พวกหนูจะโอบกอดครูไว้ในใจเสมอนะคะ 😊<br><br><i>จากนักเรียนตัวแทนห้อง ปวช. 3/3 CT คนหนึ่ง</i></p>
     </section>
 
     <section id="thankyou">
@@ -592,16 +641,14 @@
         <p>พวกเรานักเรียน <span style="font-weight: bold; color: var(--accent-light);">ปวช. 3/3 CT</span> ขอขอบคุณคุณครูทุกท่านที่คอยอยู่เคียงข้าง ให้คำแนะนำ และเป็นกำลังใจให้พวกเราตลอดเส้นทางที่ผ่านมา<br><br>ขอบคุณสำหรับความรู้ <span style="font-weight: bold; color: var(--accent-light);">ประสบการณ์</span> และทุกสิ่งทุกอย่างที่ครูได้มอบให้ — ไม่เพียงแค่ในบทเรียน แต่รวมถึงบทเรียนชีวิตที่เราได้รับจากครูทุกคน เราจะไม่มีวันลืมพระคุณอันยิ่งใหญ่นี้เลยครับ/ค่ะ 💖<br><br><span style="font-weight: bold; color: var(--accent-light);">ด้วยรักและเคารพเสมอ</span><br><i>จากนักเรียนห้อง ปวช. 3/3 CT ทุกคน</i></p>
     </section>
 
-    <section id="gallery-main">
-        <h2>📸 ภาพความทรงจำของเรา</h2>
-        <p>รวบรวมภาพความประทับใจและช่วงเวลาที่มีความสุขของพวกเราที่ผ่านมาด้วยกัน</p>
-        <div class="carousel-container" id="mainCarousel">
+    <section id="memories">
+        <h2>💖 ความทรงจำแห่งความสุข</h2>
+        <p>
+            ภาพความประทับใจจากวันต่าง ๆ จากพวกเราทุกคน ความร่วมมือ ความสนุกสนาน และมิตรภาพที่ไม่มีวันลืมเลือน
+        </p>
+        <div class="carousel-container" id="eventCarousel">
             <div class="carousel-slides">
-                <img src="Gallerys/1.jpg" alt="ความทรงจำ 1">
-                <img src="Gallerys/2.jpg" alt="ความทรงจำ 2">
-                <img src="Gallerys/3.jpg" alt="ความทรงจำ 3">
-                <img src="Gallerys/4.jpg" alt="ความทรงจำ 4">
-                <img src="Gallerys/5.jpg" alt="ความทรงจำ 5">
+                <!-- สื่อสำหรับ Carousel จะถูกโหลดที่นี่ด้วย JavaScript -->
             </div>
             <button class="carousel-button prev" aria-label="ภาพก่อนหน้า">&#10094;</button>
             <button class="carousel-button next" aria-label="ภาพถัดไป">&#10095;</button>
@@ -609,22 +656,11 @@
         </div>
     </section>
 
-    <section id="memories">
-        <h2>💖 ช่วงเวลาแห่งความสุข</h2>
-        <p>
-            ภาพความประทับใจจากวันงานไหว้ครูและเบื้องหลังการเตรียมพานจากพวกเราทุกคน ความร่วมมือ ความสนุกสนาน และมิตรภาพที่ไม่มีวันลืมเลือน
-        </p>
-        <div class="carousel-container" id="eventCarousel">
-            <div class="carousel-slides">
-                <img src="Memories/1.jpg" alt="ความสุข 1">
-                <img src="Memories/2.jpg" alt="ความสุข 2">
-                <img src="Memories/3.jpg" alt="ความสุข 3">
-                <img src="Memories/4.jpg" alt="ความสุข 4">
-                <img src="Memories/5.jpg" alt="ความสุข 5">
-            </div>
-            <button class="carousel-button prev" aria-label="ภาพก่อนหน้า">&#10094;</button>
-            <button class="carousel-button next" aria-label="ภาพถัดไป">&#10095;</button>
-            <div class="carousel-indicators"></div>
+    <section id="gallery">
+        <h2>📸 แกลเลอรีความทรงจำของเรา</h2>
+        <p>รวบรวมภาพและวิดีโอความประทับใจและช่วงเวลาที่มีความสุขของพวกเราที่ผ่านมาด้วยกัน</p>
+        <div class="grid-gallery" id="mediaGallery">
+            <!-- สื่อจะถูกโหลดที่นี่ด้วย JavaScript -->
         </div>
     </section>
 
@@ -638,7 +674,7 @@
 
     <footer>
         <div class="footer-left">
-            <img src="Images/Kayung.jpg" alt="Kayung Profile" class="footer-profile-img">
+            <img src="Images/Kayung.jpg" alt="Kayung Profile" class="footer-profile-img"> <!-- Placeholder for Images/Kayung.jpg -->
             <p>&copy; 2568 Witcytech สงวนลิขสิทธิ์</p>
         </div>
         <div class="social-media">
@@ -647,15 +683,27 @@
         </div>
     </footer>
 
-    <div id="imagePopupModal" class="popup-modal">
+    <!-- Modal สำหรับแสดงภาพ/วิดีโอเต็มจอ -->
+    <div id="mediaModal" class="popup-modal">
         <div class="popup-modal-content">
             <span class="popup-close-button">&times;</span>
-            <img id="popupImage" src="" alt="Random Memory Pop-up">
+            <div id="modalContentWrapper">
+                <!-- เนื้อหาสื่อจะถูกโหลดที่นี่ -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal สำหรับ Pop-up สุ่ม (ไม่เกี่ยวกับแกลเลอรีหลัก) -->
+    <div id="randomImagePopupModal" class="popup-modal">
+        <div class="popup-modal-content">
+            <span class="popup-close-button">&times;</span>
+            <img id="randomPopupImage" src="" alt="Random Memory Pop-up">
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // การจัดการ Elements ในหน้า
             const ELEMENTS = {
                 loadingText: document.getElementById('loadingText'),
                 welcomeText: document.getElementById('welcomeText'),
@@ -668,11 +716,16 @@
                 countdownTimerElement: document.getElementById("countdownTimer"),
                 announcementBanner: document.getElementById('announcementBanner'),
                 announcementText: document.getElementById('announcementText'),
-                imagePopupModal: document.getElementById('imagePopupModal'),
-                popupImage: document.getElementById('popupImage'),
-                popupCloseButton: document.querySelector('.popup-close-button')
+                mediaGallery: document.getElementById('mediaGallery'), // แกลเลอรี Grid ใหม่
+                mediaModal: document.getElementById('mediaModal'),
+                modalContentWrapper: document.getElementById('modalContentWrapper'),
+                mediaModalCloseButton: document.querySelector('#mediaModal .popup-close-button'),
+                randomImagePopupModal: document.getElementById('randomImagePopupModal'), // Pop-up สุ่มเดิม
+                randomPopupImage: document.getElementById('randomPopupImage'),
+                randomPopupCloseButton: document.querySelector('#randomImagePopupModal .popup-close-button')
             };
 
+            // การตั้งค่า Configuration
             const CONFIG = {
                 gradDate: new Date("2026-03-31T23:59:59").getTime(),
                 autoSlideDuration: 4000, // 4 seconds
@@ -683,15 +736,115 @@
                     "🎓 วันจบการศึกษาใกล้เข้ามาแล้ว! วันที่ 31 มีนาคม 2569",
                     "💖 ขอบคุณคุณครูและเพื่อนทุกคนสำหรับมิตรภาพที่ดีงาม"
                 ],
+
+                galleryMedia: [
+                    { type: 'image', src: 'Memories/Images/2.jpg', alt: 'ความทรงจำ 2' },
+                    { type: 'image', src: 'Memories/Images/3.jpg', alt: 'ความทรงจำ 3' },
+                    { type: 'image', src: 'Memories/Images/4.jpg', alt: 'ความทรงจำ 4' },
+                    { type: 'image', src: 'Memories/Images/5.jpg', alt: 'ความทรงจำ 5' },
+                    { type: 'image', src: 'Memories/Images/6.jpg', alt: 'ความทรงจำ 6' },
+                    { type: 'image', src: 'Memories/Images/7.jpg', alt: 'ความทรงจำ 7' },
+                    { type: 'image', src: 'Memories/Images/8.jpg', alt: 'ความทรงจำ 8' },
+                    { type: 'image', src: 'Memories/Images/9.jpg', alt: 'ความทรงจำ 9' },
+                    { type: 'image', src: 'Memories/Images/10.jpg', alt: 'ความทรงจำ 10' },
+                    { type: 'image', src: 'Memories/Images/11.jpg', alt: 'ความทรงจำ 11' },
+                    { type: 'image', src: 'Memories/Images/12.jpg', alt: 'ความทรงจำ 12' },
+                    { type: 'image', src: 'Memories/Images/13.jpg', alt: 'ความทรงจำ 13' },
+                    { type: 'image', src: 'Memories/Images/14.jpg', alt: 'ความทรงจำ 14' },
+                    { type: 'image', src: 'Memories/Images/15.jpg', alt: 'ความทรงจำ 15' },
+                    { type: 'image', src: 'Memories/Images/16.jpg', alt: 'ความทรงจำ 16' },
+                    { type: 'image', src: 'Memories/Images/17.jpg', alt: 'ความทรงจำ 17' },
+                    { type: 'image', src: 'Memories/Images/18.jpg', alt: 'ความทรงจำ 18' },
+                    { type: 'image', src: 'Memories/Images/19.jpg', alt: 'ความทรงจำ 19' },
+                    { type: 'image', src: 'Memories/Images/20.jpg', alt: 'ความทรงจำ 20' },
+                    { type: 'image', src: 'Memories/Images/21.jpg', alt: 'ความทรงจำ 21' },
+                    { type: 'image', src: 'Memories/Images/22.jpg', alt: 'ความทรงจำ 22' },
+                    { type: 'image', src: 'Memories/Images/23.jpg', alt: 'ความทรงจำ 23' },
+                    { type: 'image', src: 'Memories/Images/24.jpg', alt: 'ความทรงจำ 24' },
+                    { type: 'image', src: 'Memories/Images/25.jpg', alt: 'ความทรงจำ 25' },
+                    { type: 'image', src: 'Memories/Images/26.jpg', alt: 'ความทรงจำ 26' },
+                    { type: 'image', src: 'Memories/Images/27.jpg', alt: 'ความทรงจำ 27' },
+                    { type: 'image', src: 'Memories/Images/28.jpg', alt: 'ความทรงจำ 28' },
+                    { type: 'image', src: 'Memories/Images/29.jpg', alt: 'ความทรงจำ 29' },
+                    { type: 'image', src: 'Memories/Images/30.jpg', alt: 'ความทรงจำ 30' },
+                    { type: 'image', src: 'Memories/Images/31.jpg', alt: 'ความทรงจำ 31' },
+                    { type: 'image', src: 'Memories/Images/32.jpg', alt: 'ความทรงจำ 32' },
+                    { type: 'image', src: 'Memories/Images/33.jpg', alt: 'ความทรงจำ 33' },
+                    { type: 'image', src: 'Memories/Images/34.jpg', alt: 'ความทรงจำ 34' },
+                    { type: 'image', src: 'Memories/Images/35.jpg', alt: 'ความทรงจำ 35' },
+                    { type: 'image', src: 'Memories/Images/36.jpg', alt: 'ความทรงจำ 36' },
+                    { type: 'image', src: 'Memories/Images/37.jpg', alt: 'ความทรงจำ 37' },
+                    { type: 'image', src: 'Memories/Images/38.jpg', alt: 'ความทรงจำ 38' },
+                    { type: 'image', src: 'Memories/Images/39.jpg', alt: 'ความทรงจำ 39' },
+                    { type: 'image', src: 'Memories/Images/40.jpg', alt: 'ความทรงจำ 40' },
+                    { type: 'image', src: 'Memories/Images/41.jpg', alt: 'ความทรงจำ 41' },
+                    { type: 'image', src: 'Memories/Images/42.jpg', alt: 'ความทรงจำ 42' },
+                    { type: 'image', src: 'Memories/Images/43.jpg', alt: 'ความทรงจำ 43' },
+                    { type: 'image', src: 'Memories/Images/44.jpg', alt: 'ความทรงจำ 44' },
+                    { type: 'image', src: 'Memories/Images/45.jpg', alt: 'ความทรงจำ 45' },
+                    { type: 'image', src: 'Memories/Images/46.jpg', alt: 'ความทรงจำ 46' },
+                    { type: 'image', src: 'Memories/Images/47.jpg', alt: 'ความทรงจำ 47' },
+                    { type: 'image', src: 'Memories/Images/48.jpg', alt: 'ความทรงจำ 48' },
+                    { type: 'image', src: 'Memories/Images/49.jpg', alt: 'ความทรงจำ 49' },
+                    { type: 'image', src: 'Memories/Images/50.jpg', alt: 'ความทรงจำ 50' },
+                    { type: 'image', src: 'Memories/Images/51.jpg', alt: 'ความทรงจำ 51' },
+                    { type: 'image', src: 'Memories/Images/52.jpg', alt: 'ความทรงจำ 52' },
+                    { type: 'image', src: 'Memories/Images/53.jpg', alt: 'ความทรงจำ 53' },
+                    { type: 'image', src: 'Memories/Images/54.jpg', alt: 'ความทรงจำ 54' },
+                    { type: 'image', src: 'Memories/Images/55.jpg', alt: 'ความทรงจำ 55' },
+                    { type: 'image', src: 'Memories/Images/56.jpg', alt: 'ความทรงจำ 56' },
+                    { type: 'image', src: 'Memories/Images/57.jpg', alt: 'ความทรงจำ 57' },
+                    { type: 'image', src: 'Memories/Images/58.jpg', alt: 'ความทรงจำ 58' },
+                    { type: 'image', src: 'Memories/Images/59.jpg', alt: 'ความทรงจำ 59' },
+                    { type: 'image', src: 'Memories/Images/60.jpg', alt: 'ความทรงจำ 60' },
+                    { type: 'image', src: 'Memories/Images/61.jpg', alt: 'ความทรงจำ 61' },
+                    { type: 'image', src: 'Memories/Images/62.jpg', alt: 'ความทรงจำ 62' },
+                    { type: 'image', src: 'Memories/Images/63.jpg', alt: 'ความทรงจำ 63' },
+                    { type: 'image', src: 'Memories/Images/64.jpg', alt: 'ความทรงจำ 64' },
+                    { type: 'image', src: 'Memories/Images/65.jpg', alt: 'ความทรงจำ 65' },
+                    { type: 'image', src: 'Memories/Images/66.jpg', alt: 'ความทรงจำ 66' },
+                    { type: 'image', src: 'Memories/Images/67.jpg', alt: 'ความทรงจำ 67' },
+                    { type: 'image', src: 'Memories/Images/68.jpg', alt: 'ความทรงจำ 68' },
+                    { type: 'image', src: 'Memories/Images/69.jpg', alt: 'ความทรงจำ 69' },
+                    { type: 'image', src: 'Memories/Images/70.jpg', alt: 'ความทรงจำ 70' },
+                    { type: 'image', src: 'Memories/Images/71.jpg', alt: 'ความทรงจำ 71' },
+                    { type: 'image', src: 'Memories/Images/72.jpg', alt: 'ความทรงจำ 72' },
+                    { type: 'image', src: 'Memories/Images/73.jpg', alt: 'ความทรงจำ 73' },
+                    { type: 'image', src: 'Memories/Images/74.jpg', alt: 'ความทรงจำ 74' },
+                    { type: 'image', src: 'Memories/Images/75.jpg', alt: 'ความทรงจำ 75' },
+                    { type: 'image', src: 'Memories/Images/76.jpg', alt: 'ความทรงจำ 76' },
+                    { type: 'image', src: 'Memories/Images/77.jpg', alt: 'ความทรงจำ 77' },
+                    { type: 'image', src: 'Memories/Images/78.jpg', alt: 'ความทรงจำ 78' },
+                    { type: 'image', src: 'Memories/Images/79.jpg', alt: 'ความทรงจำ 79' },
+                    { type: 'image', src: 'Memories/Images/80.jpg', alt: 'ความทรงจำ 80' },
+                    { type: 'video', src: 'Memories/Videos/1.mov', alt: 'วิดีโอ 1' },
+                    { type: 'video', src: 'Memories/Videos/2.mov', alt: 'วิดีโอ 2' },
+                    { type: 'video', src: 'Memories/Videos/3.mov', alt: 'วิดีโอ 3' },
+                    { type: 'video', src: 'Memories/Videos/4.mov', alt: 'วิดีโอ 4' },
+                    { type: 'video', src: 'Memories/Videos/5.mov', alt: 'วิดีโอ 5' },
+                    { type: 'video', src: 'Memories/Videos/6.mov', alt: 'วิดีโอ 6' },
+                    { type: 'video', src: 'Memories/Videos/7.mov', alt: 'วิดีโอ 7' },
+                    { type: 'video', src: 'Memories/Videos/8.mov', alt: 'วิดีโอ 8' },
+                    { type: 'video', src: 'Memories/Videos/9.mov', alt: 'วิดีโอ 9' },
+                    { type: 'video', src: 'Memories/Videos/10.mov', alt: 'วิดีโอ 10' },
+                ],
+                
+                eventCarouselMedia: [
+                    { type: 'image', src: 'Gallerys/1.jpg', alt: 'ความสุข 1' },
+                    { type: 'image', src: 'Gallerys/2.jpg', alt: 'ความสุข 2' },
+                    { type: 'image', src: 'Gallerys/3.jpg', alt: 'ความสุข 3' },
+                    { type: 'image', src: 'Gallerys/4.jpg', alt: 'ความสุข 4' },
+                    { type: 'image', src: 'Gallerys/5.jpg', alt: 'ความสุข 5' },
+                    { type: 'image', src: 'Gallerys/6.jpg', alt: 'ความสุข 6' },
+                    { type: 'image', src: 'Gallerys/7.jpg', alt: 'ความสุข 7' },
+                ],
+
                 popupImages: [
-                    'Images/Kik.jpg',
-                    'Images/44313.jpg',
-                    'Images/44314.jpg',
-                    'Images/30146571.jpg',
-                    'Images/Kayung.jpg',
-                    'Images/Event1.jpg',
-                    'Images/Event2.jpg',
-                    'Images/Event3.jpg'
+                    'Memories/Images/1.jpg',
+                    'Memories/Images/2.jpg',
+                    'Memories/Images/3.jpg',
+                    'Memories/Images/4.jpg',
+                    'Memories/Images/5.jpg',
                 ]
             };
 
@@ -703,7 +856,9 @@
             document.body.classList.add('no-scroll');
             ELEMENTS.backgroundMusic.volume = 0.5;
 
-            // Music Toggle
+            /**
+             * อัปเดตไอคอนปุ่มเสียงตามสถานะการปิดเสียงของเพลง
+             */
             const updateSoundButtonIcon = () => {
                 const icon = ELEMENTS.toggleSoundButton.querySelector('i');
                 if (ELEMENTS.backgroundMusic.muted) {
@@ -713,10 +868,12 @@
                 }
             };
 
+            // Event Listener สำหรับปุ่มสลับเสียง
             ELEMENTS.toggleSoundButton.onclick = () => {
                 ELEMENTS.backgroundMusic.muted = !ELEMENTS.backgroundMusic.muted;
                 updateSoundButtonIcon();
                 if (!ELEMENTS.backgroundMusic.muted && ELEMENTS.backgroundMusic.paused) {
+                    // เล่นเพลงหากไม่ได้ปิดเสียงและเพลงหยุดอยู่
                     ELEMENTS.backgroundMusic.play().catch(e => console.error("Music play failed:", e));
                 }
             };
@@ -724,7 +881,7 @@
             ELEMENTS.backgroundMusic.onplay = updateSoundButtonIcon;
             ELEMENTS.backgroundMusic.onpause = updateSoundButtonIcon;
 
-            // Loader Logic
+            // Logic การโหลดหน้าเว็บ
             let dotCount = 0;
             const loadingInterval = setInterval(() => {
                 dotCount = (dotCount + 1) % 4;
@@ -756,12 +913,12 @@
                             updateSoundButtonIcon();
                         });
                         updateSoundButtonIcon();
-                        startPopupInterval();
+                        startRandomPopupInterval(); // เปลี่ยนชื่อฟังก์ชันให้ชัดเจนขึ้น
                     }, 1000);
                 }, 3500);
             }, 3000);
 
-            // Menu Toggle Logic
+            // Logic การสลับเมนู
             const showMenu = () => {
                 clearTimeout(hideMenuTimeout);
                 ELEMENTS.menuItems.classList.add('active');
@@ -799,7 +956,7 @@
                 ELEMENTS.menuItems.addEventListener('mouseleave', hideMenuWithDelay);
             }
 
-            // Countdown Timer
+            // ตัวนับถอยหลัง
             const updateCountdown = () => {
                 const now = new Date().getTime();
                 const distance = CONFIG.gradDate - now;
@@ -820,7 +977,7 @@
             const countdownInterval = setInterval(updateCountdown, 1000);
             updateCountdown();
 
-            // Scroll to Section Function
+            // ฟังก์ชันเลื่อนไปยังส่วนที่เลือก
             window.scrollToSection = (id) => {
                 const element = document.getElementById(id);
                 if (element) {
@@ -830,23 +987,160 @@
                 }
             };
 
-            // Carousel Gallery Logic
-            const initializeCarousel = (containerId) => {
+            /**
+             * ฟังก์ชันสำหรับสร้างและแสดงแกลเลอรีแบบ Grid
+             */
+            const loadGridGallery = () => {
+                ELEMENTS.mediaGallery.innerHTML = ''; // ล้างแกลเลอรีเดิม
+                CONFIG.galleryMedia.forEach((media, index) => {
+                    const galleryItem = document.createElement('div');
+                    galleryItem.classList.add('gallery-item');
+                    galleryItem.dataset.index = index; // เก็บ index เพื่อใช้อ้างอิง
+
+                    if (media.type === 'image') {
+                        const img = document.createElement('img');
+                        img.src = media.src;
+                        img.alt = media.alt;
+                        img.loading = 'lazy'; // Lazy load
+                        galleryItem.appendChild(img);
+                        const overlay = document.createElement('div');
+                        overlay.classList.add('overlay');
+                        overlay.innerHTML = '<i class="fas fa-search-plus"></i>'; // Icon for image
+                        galleryItem.appendChild(overlay);
+                    } else if (media.type === 'video') {
+                        const video = document.createElement('video');
+                        video.src = media.src;
+                        video.alt = media.alt;
+                        video.preload = 'metadata'; // โหลดข้อมูลเมตาดาต้าเท่านั้น
+                        video.controls = false; // ซ่อน controls เพื่อให้คลิกเปิด modal
+                        video.muted = true; // ปิดเสียงเมื่อเล่น preview
+                        video.loop = true; // เล่นวน
+                        video.setAttribute('playsinline', ''); // สำหรับ iOS auto-play
+                        video.loading = 'lazy'; // Lazy load
+                        // เพิ่ม event listener เพื่อเล่น/หยุดวิดีโอเมื่อเข้า/ออกจาก viewport (ไม่ซ้ำซ้อน)
+                        const observer = new IntersectionObserver(entries => {
+                            entries.forEach(entry => {
+                                if (entry.isIntersecting) {
+                                    video.play().catch(e => console.error("Video play failed:", e));
+                                } else {
+                                    video.pause();
+                                }
+                            });
+                        }, { threshold: 0.5 }); // 50% ของวิดีโอต้องอยู่ใน viewport
+                        observer.observe(video);
+
+                        galleryItem.appendChild(video);
+                        const overlay = document.createElement('div');
+                        overlay.classList.add('overlay');
+                        overlay.innerHTML = '<i class="fas fa-play-circle"></i>'; // Icon for video
+                        galleryItem.appendChild(overlay);
+                    }
+
+                    ELEMENTS.mediaGallery.appendChild(galleryItem);
+                });
+
+                // Event listener สำหรับเปิด Modal เมื่อคลิกที่สื่อในแกลเลอรี
+                ELEMENTS.mediaGallery.addEventListener('click', (event) => {
+                    const item = event.target.closest('.gallery-item');
+                    if (item) {
+                        const index = parseInt(item.dataset.index);
+                        const media = CONFIG.galleryMedia[index];
+                        showMediaModal(media);
+                    }
+                });
+            };
+
+            /**
+             * ฟังก์ชันสำหรับแสดง Modal ของสื่อ (ภาพ/วิดีโอ)
+             * @param {object} media - ออบเจกต์สื่อที่มี type และ src
+             */
+            const showMediaModal = (media) => {
+                ELEMENTS.modalContentWrapper.innerHTML = ''; // ล้างเนื้อหาเก่า
+                if (media.type === 'image') {
+                    const img = document.createElement('img');
+                    img.src = media.src;
+                    img.alt = media.alt;
+                    ELEMENTS.modalContentWrapper.appendChild(img);
+                } else if (media.type === 'video') {
+                    const video = document.createElement('video');
+                    video.src = media.src;
+                    video.alt = media.alt;
+                    video.controls = true; // แสดง controls สำหรับวิดีโอเต็มจอ
+                    video.autoplay = true; // เล่นอัตโนมัติเมื่อเปิด modal
+                    video.loop = true; // เล่นวน
+                    video.setAttribute('playsinline', '');
+                    ELEMENTS.modalContentWrapper.appendChild(video);
+                }
+                ELEMENTS.mediaModal.style.display = 'flex';
+                document.body.classList.add('no-scroll'); // ปิดการเลื่อนหน้าหลัก
+            };
+
+            /**
+             * ฟังก์ชันสำหรับซ่อน Modal ของสื่อ
+             */
+            const hideMediaModal = () => {
+                // หยุดเล่นวิดีโอใน Modal เมื่อปิด
+                const modalVideo = ELEMENTS.modalContentWrapper.querySelector('video');
+                if (modalVideo) {
+                    modalVideo.pause();
+                }
+                ELEMENTS.mediaModal.style.display = 'none';
+                document.body.classList.remove('no-scroll');
+            };
+
+            // Event Listener สำหรับปุ่มปิด Modal และคลิกนอก Modal
+            ELEMENTS.mediaModalCloseButton.addEventListener('click', hideMediaModal);
+            ELEMENTS.mediaModal.addEventListener('click', (event) => {
+                if (event.target === ELEMENTS.mediaModal) {
+                    hideMediaModal();
+                }
+            });
+
+
+            // Logic Carousel Gallery (ยังคงใช้สำหรับ Event Carousel)
+            /**
+             * ฟังก์ชันสำหรับเริ่มต้น Carousel
+             * @param {string} containerId - ID ของคอนเทนเนอร์ Carousel
+             * @param {Array<object>} mediaItems - อาร์เรย์ของออบเจกต์สื่อสำหรับ Carousel
+             */
+            const initializeCarousel = (containerId, mediaItems) => {
                 const carouselContainer = document.getElementById(containerId);
                 if (!carouselContainer) return;
 
                 const carouselSlides = carouselContainer.querySelector('.carousel-slides');
-                const carouselImages = carouselContainer.querySelectorAll('.carousel-slides img');
                 const prevButton = carouselContainer.querySelector('.carousel-button.prev');
                 const nextButton = carouselContainer.querySelector('.carousel-button.next');
                 const indicatorsContainer = carouselContainer.querySelector('.carousel-indicators');
                 let currentIndex = 0;
-                const totalImages = carouselImages.length;
+                const totalItems = mediaItems.length;
                 let autoSlideInterval;
+
+                // เพิ่มสื่อลงใน Carousel
+                carouselSlides.innerHTML = '';
+                mediaItems.forEach(media => {
+                    if (media.type === 'image') {
+                        const img = document.createElement('img');
+                        img.src = media.src;
+                        img.alt = media.alt;
+                        img.loading = 'lazy';
+                        carouselSlides.appendChild(img);
+                    } else if (media.type === 'video') {
+                        const video = document.createElement('video');
+                        video.src = media.src;
+                        video.alt = media.alt;
+                        video.controls = true;
+                        video.preload = 'metadata';
+                        video.loop = true;
+                        video.muted = true; // เพื่อให้ autoplay ได้โดยไม่มีปัญหา
+                        video.setAttribute('playsinline', '');
+                        video.loading = 'lazy';
+                        carouselSlides.appendChild(video);
+                    }
+                });
 
                 const createIndicators = () => {
                     indicatorsContainer.innerHTML = '';
-                    for (let i = 0; i < totalImages; i++) {
+                    for (let i = 0; i < totalItems; i++) {
                         const indicator = document.createElement('div');
                         indicator.classList.add('carousel-indicator');
                         indicator.addEventListener('click', () => goToSlide(i));
@@ -857,6 +1151,17 @@
 
                 const updateCarousel = () => {
                     carouselSlides.style.transform = `translateX(${-currentIndex * 100}%)`;
+                    // จัดการการเล่น/หยุดวิดีโอใน Carousel
+                    carouselSlides.querySelectorAll('video').forEach((video, idx) => {
+                        if (idx === currentIndex) {
+                            video.play().catch(e => console.error("Carousel video play failed:", e));
+                            video.muted = false; // เปิดเสียงเมื่ออยู่บนสไลด์ที่แสดง
+                        } else {
+                            video.pause();
+                            video.muted = true;
+                            video.currentTime = 0; // รีเซ็ตเวลาวิดีโอ
+                        }
+                    });
                     updateIndicators();
                 };
 
@@ -873,8 +1178,8 @@
                 const goToSlide = (index) => {
                     currentIndex = index;
                     if (currentIndex < 0) {
-                        currentIndex = totalImages - 1;
-                    } else if (currentIndex >= totalImages) {
+                        currentIndex = totalItems - 1;
+                    } else if (currentIndex >= totalItems) {
                         currentIndex = 0;
                     }
                     updateCarousel();
@@ -905,10 +1210,6 @@
                 startAutoSlide();
             };
 
-            initializeCarousel('mainCarousel');
-            initializeCarousel('phaanCarousel');
-            initializeCarousel('eventCarousel');
-
             // Announcement Banner Logic
             const displayAnnouncement = () => {
                 ELEMENTS.announcementText.classList.remove('fade-in');
@@ -928,25 +1229,27 @@
 
             updateSoundButtonIcon();
 
-            // Pop-up Modal Logic
+            // Pop-up Modal Logic (สำหรับ Pop-up สุ่ม)
             const showRandomPopup = () => {
                 const randomIndex = Math.floor(Math.random() * CONFIG.popupImages.length);
-                ELEMENTS.popupImage.src = CONFIG.popupImages[randomIndex];
-                ELEMENTS.imagePopupModal.style.display = 'flex';
+                ELEMENTS.randomPopupImage.src = CONFIG.popupImages[randomIndex];
+                ELEMENTS.randomImagePopupModal.style.display = 'flex';
+                document.body.classList.add('no-scroll');
             };
 
-            const hidePopup = () => {
-                ELEMENTS.imagePopupModal.style.display = 'none';
+            const hideRandomPopup = () => {
+                ELEMENTS.randomImagePopupModal.style.display = 'none';
+                document.body.classList.remove('no-scroll');
             };
 
-            ELEMENTS.popupCloseButton.addEventListener('click', hidePopup);
-            ELEMENTS.imagePopupModal.addEventListener('click', (event) => {
-                if (event.target === ELEMENTS.imagePopupModal) {
-                    hidePopup();
+            ELEMENTS.randomPopupCloseButton.addEventListener('click', hideRandomPopup);
+            ELEMENTS.randomImagePopupModal.addEventListener('click', (event) => {
+                if (event.target === ELEMENTS.randomImagePopupModal) {
+                    hideRandomPopup();
                 }
             });
 
-            const startPopupInterval = () => {
+            const startRandomPopupInterval = () => {
                 const triggerPopup = () => {
                     showRandomPopup();
                     const nextDelay = Math.random() * (CONFIG.popupMaxDelay - CONFIG.popupMinDelay) + CONFIG.popupMinDelay;
@@ -954,6 +1257,10 @@
                 };
                 popupInterval = setTimeout(triggerPopup, Math.random() * (CONFIG.popupMaxDelay - CONFIG.popupMinDelay) + CONFIG.popupMinDelay);
             };
+
+            // เริ่มต้นแกลเลอรี Grid และ Carousel
+            loadGridGallery();
+            initializeCarousel('eventCarousel', CONFIG.eventCarouselMedia);
         });
     </script>
 </body>
