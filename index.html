@@ -476,75 +476,6 @@
             opacity: 1;
         }
 
-        /* สไตล์สำหรับ Audio Control Container */
-        .audio-control-container {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        /* สไตล์สำหรับ Volume Control Slider */
-        #volumeControl {
-            background: rgba(29, 53, 87, 0.9);
-            border: 1px solid var(--primary);
-            border-radius: 8px;
-            padding: 5px 10px;
-            margin-top: 5px; /* ระยะห่างจากปุ่มเสียง */
-            opacity: 1; /* เริ่มต้นให้แสดง */
-            transition: opacity 0.3s ease, max-height 0.3s ease;
-            max-height: 50px; /* กำหนด max-height เพื่อให้ transition ทำงาน */
-            overflow: hidden; /* ซ่อนส่วนเกินเมื่อ max-height ลดลง */
-        }
-
-        #volumeControl.volume-control-hidden {
-            opacity: 0;
-            max-height: 0;
-            padding: 0 10px;
-            border: none;
-            pointer-events: none; /* ไม่ตอบสนองต่อการคลิกเมื่อซ่อน */
-        }
-
-        #volumeSlider {
-            width: 100%;
-            -webkit-appearance: none; /* ลบ default styles ของ browser */
-            height: 8px;
-            background: var(--accent-light); /* สีของ track */
-            border-radius: 5px;
-            outline: none;
-            cursor: pointer;
-        }
-
-        /* Thumb (ตัวเลื่อน) ของ Slider */
-        #volumeSlider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            background: var(--text); /* สีของ thumb */
-            border: 2px solid var(--primary);
-            border-radius: 50%;
-            cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-            transition: background 0.3s ease;
-        }
-
-        #volumeSlider::-moz-range-thumb {
-            width: 20px;
-            height: 20px;
-            background: var(--text);
-            border: 2px solid var(--primary);
-            border-radius: 50%;
-            cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-            transition: background 0.3s ease;
-        }
-
-        #volumeSlider::-webkit-slider-thumb:hover,
-        #volumeSlider::-moz-range-thumb:hover {
-            background: #ffffff; /* สีเมื่อ hover */
-        }
-
         @keyframes slideInFromTop {
             from {
                 transform: translateY(-100%);
@@ -619,12 +550,7 @@
         <button data-label="ภาพความทรงจำ" onclick="scrollToSection('gallery-main')"><i class="fas fa-image"></i> ภาพความทรงจำ</button>
         <button data-label="เรื่องราว" onclick="scrollToSection('our-story')"><i class="fas fa-book-open"></i> เรื่องราวของเรา</button>
         <button data-label="วันจบการศึกษา" onclick="scrollToSection('countdown')"><i class="fas fa-clock"></i> วันจบการศึกษา</button>
-        <div class="audio-control-container">
-            <button id="toggleSoundButton" data-label="เสียง"><i class="fas fa-volume-up"></i> เสียง</button>
-            <div id="volumeControl" class="volume-control-hidden">
-                <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.5" aria-label="ปรับระดับเสียง">
-            </div>
-        </div>
+        <button id="toggleSoundButton" data-label="เสียง"><i class="fas fa-volume-up"></i> เสียง</button>
     </div>
 </nav>
 
@@ -721,88 +647,69 @@
             const randomMemoryElement = document.getElementById("randomMemory");
             const countdownTimerElement = document.getElementById("countdownTimer");
             const announcementBanner = document.getElementById('announcementBanner');
-            const announcementText = document.getElementById('announcementText'); // เพิ่ม element สำหรับข้อความใน banner
-            const volumeControl = document.getElementById('volumeControl');
-            const volumeSlider = document.getElementById('volumeSlider');
+            const announcementText = document.getElementById('announcementText');
 
             // ตั้งค่าเริ่มต้นของเพลง
             backgroundMusic.volume = 0.5; // ตั้งค่าเริ่มต้นที่ 50%
-            volumeSlider.value = 0.5; // ตั้งค่า slider ให้ตรงกับระดับเสียงเริ่มต้น
 
-            // --- Music Toggle and Volume Control (เปิด-ปิดเพลงและควบคุมระดับเสียง) ---
-            toggleSoundButton.onclick = (event) => {
-                event.stopPropagation(); // หยุดการส่ง event ไปยัง document
-                // สลับการแสดงผลของ Volume Control
-                volumeControl.classList.toggle('volume-control-hidden');
+            // --- Music Toggle (เปิด-ปิดเพลง) ---
+            const updateSoundButtonIcon = () => {
+                const icon = toggleSoundButton.querySelector('i');
                 if (backgroundMusic.muted) {
-                    backgroundMusic.muted = false;
-                    backgroundMusic.volume = volumeSlider.value > 0 ? volumeSlider.value : 0.5; // กลับไปที่ค่า slider หรือ 0.5 ถ้า slider เป็น 0
-                    backgroundMusic.play().catch(e => console.log("Music play failed:", e));
-                    toggleSoundButton.innerHTML = '<i class="fas fa-volume-up"></i> เสียง';
-                } else if (backgroundMusic.volume === 0) { // ถ้าเสียงเป็น 0 ให้เปิดเสียงกลับไปที่ค่าเดิม (ก่อนที่จะ mute)
-                    backgroundMusic.muted = false;
-                    backgroundMusic.volume = volumeSlider.value > 0 ? volumeSlider.value : 0.5; // กลับไปที่ค่า slider หรือ 0.5 ถ้า slider เป็น 0
-                    backgroundMusic.play().catch(e => console.log("Music play failed:", e));
-                    toggleSoundButton.innerHTML = '<i class="fas fa-volume-up"></i> เสียง';
-                }
-                else {
-                    backgroundMusic.muted = true; // ปิดเสียง
-                    toggleSoundButton.innerHTML = '<i class="fas fa-volume-mute"></i> เสียง';
-                }
-            };
-            // เมื่อปรับ Volume Slider
-            volumeSlider.oninput = (event) => {
-                event.stopPropagation(); // หยุดการส่ง event ไปยัง document
-                backgroundMusic.volume = volumeSlider.value;
-                if (backgroundMusic.volume == 0) { // ใช้ == แทน === เพราะ value อาจเป็น string
-                    backgroundMusic.muted = true;
-                    toggleSoundButton.innerHTML = '<i class="fas fa-volume-off"></i> เสียง'; // เปลี่ยนเป็นไอคอนลำโพงปิดเสียงสนิท
+                    icon.className = 'fas fa-volume-off'; // ลำโพงปิดเสียงสนิท
                 } else {
-                    backgroundMusic.muted = false;
-                    toggleSoundButton.innerHTML = '<i class="fas fa-volume-up"></i> เสียง';
+                    icon.className = 'fas fa-volume-up'; // เสียงปกติ
                 }
             };
-            // เพิ่มการตรวจสอบการคลิกนอกเมนูเพื่อซ่อนแถบเสียง
-            document.addEventListener('click', (event) => {
-                // ตรวจสอบว่าคลิกนอก menuToggle, menuItems และ volumeControl
-                const isClickInsideMenuToggle = menuToggle.contains(event.target);
-                const isClickInsideMenuItems = menuItems.contains(event.target);
-                const isClickInsideVolumeControl = volumeControl.contains(event.target);
 
-                if (!isClickInsideMenuToggle && !isClickInsideMenuItems && !isClickInsideVolumeControl) {
-                    volumeControl.classList.add('volume-control-hidden');
+            // เมื่อคลิกปุ่มเสียง
+            toggleSoundButton.onclick = () => {
+                backgroundMusic.muted = !backgroundMusic.muted; // สลับสถานะ muted
+                updateSoundButtonIcon(); // อัปเดตไอคอนทันที
+
+                // ถ้าเพลงไม่ถูก mute และยังไม่เล่น ให้ลองเล่น
+                if (!backgroundMusic.muted && backgroundMusic.paused) {
+                    backgroundMusic.play().catch(e => console.log("Music play failed:", e));
                 }
-            });
+            };
+
+            // อัปเดตไอคอนเมื่อมีการเปลี่ยนแปลงจากภายนอก (เช่น autoplay ถูกบล็อก)
+            backgroundMusic.onvolumechange = updateSoundButtonIcon;
+            backgroundMusic.onplay = updateSoundButtonIcon;
+            backgroundMusic.onpause = updateSoundButtonIcon;
+
             // --- Loader Logic (หน้าจอโหลด) ---
             let dotCount = 0;
-            // ตั้งค่า Interval สำหรับ animation จุดไข่ปลา
             const loadingInterval = setInterval(() => {
-                dotCount = (dotCount + 1) % 4; // วนรอบ 0, 1, 2, 3
-                const dots = '.'.repeat(dotCount); // สร้างจุดไข่ปลา
-                loadingText.textContent = `กำลังโหลด${dots}`; // อัปเดตข้อความ
+                dotCount = (dotCount + 1) % 4;
+                const dots = '.'.repeat(dotCount);
+                loadingText.textContent = `กำลังโหลด${dots}`;
             }, 700);
 
-            // เมื่อโหลดเสร็จ: ซ่อน loadingText, แสดง welcomeText, เล่นเพลง
             setTimeout(() => {
-                clearInterval(loadingInterval); // หยุด animation จุดไข่ปลา
-                loadingText.style.opacity = '0'; // ทำให้ loadingText จางหายไป
+                clearInterval(loadingInterval);
+                loadingText.style.opacity = '0';
                 setTimeout(() => {
-                    loadingText.style.display = 'none'; // ซ่อน loadingText
-                    welcomeText.style.display = 'block'; // แสดง welcomeText
+                    loadingText.style.display = 'none';
+                    welcomeText.style.display = 'block';
                     setTimeout(() => {
-                        welcomeText.style.opacity = '1'; // ทำให้ welcomeText ปรากฏขึ้น
-                    }, 50); // หน่วงเวลาเล็กน้อยเพื่อให้ transition ทำงาน
-                }, 1000); // หน่วงเวลา 1 วินาที ก่อนแสดง welcomeText
+                        welcomeText.style.opacity = '1';
+                    }, 50);
+                }, 1000);
 
                 setTimeout(() => {
-                    welcomeText.style.opacity = '0'; // ทำให้ welcomeText จางหายไป
+                    welcomeText.style.opacity = '0';
                     setTimeout(() => {
-                        loader.style.opacity = '0'; // ทำให้ loader จางหายไป
-                        loader.style.visibility = 'hidden'; // ซ่อน loader อย่างสมบูรณ์
-                        document.body.classList.remove('no-scroll'); // อนุญาตให้ scroll ได้
-                        backgroundMusic.muted = false; // เปิดเสียงเพลง
-                        backgroundMusic.play().catch(e => console.log("Music play failed:", e)); // เล่นเพลง (จัดการข้อผิดพลาดหากเล่นไม่ได้)
-                        toggleSoundButton.innerHTML = '<i class="fas fa-volume-up"></i> เสียง'; // เปลี่ยนไอคอนปุ่มเสียง
+                        loader.style.opacity = '0';
+                        loader.style.visibility = 'hidden';
+                        document.body.classList.remove('no-scroll');
+
+                        backgroundMusic.play().catch(e => {
+                            console.log("Music autoplay failed:", e);
+                            backgroundMusic.muted = true; // ถ้าเล่นไม่ได้ ให้ตั้งเป็น mute
+                            updateSoundButtonIcon(); // อัปเดตไอคอน
+                        });
+                        updateSoundButtonIcon();
                     }, 1000);
                 }, 3500);
             }, 3000);
@@ -811,46 +718,43 @@
             const isMobile = window.matchMedia("(max-width: 768px)").matches;
             let hideMenuTimeout;
 
-            // ฟังก์ชันสำหรับแสดงเมนู
             const showMenu = () => {
                 clearTimeout(hideMenuTimeout);
                 menuItems.classList.add('active');
             };
-            // ฟังก์ชันสำหรับซ่อนเมนูพร้อม delay
+
             const hideMenuWithDelay = () => {
                 hideMenuTimeout = setTimeout(() => {
-                    menuItems.classList.remove('active'); // ลบคลาส 'active' เพื่อซ่อนเมนู
+                    menuItems.classList.remove('active');
                 }, 300);
             };
+
             if (isMobile) {
-                // พฤติกรรมสำหรับมือถือ: แตะเพื่อสลับการแสดงผลเมนู
                 menuToggle.addEventListener('click', (event) => {
-                    event.stopPropagation(); // ป้องกัน event bubble ไปยัง document body
-                    menuItems.classList.toggle('active'); // สลับคลาส 'active'
+                    event.stopPropagation();
+                    menuItems.classList.toggle('active');
                     if (!menuItems.classList.contains('active')) {
-                        clearTimeout(hideMenuTimeout); // ถ้าเมนูปิด ให้ล้าง timeout
+                        clearTimeout(hideMenuTimeout);
                     }
                 });
-                // ปิดเมนูเมื่อผู้ใช้แตะนอกเมนูบนมือถือ
-                document.addEventListener('click', (event) => {
-                    if (!mainMenuBar.contains(event.target) && menuItems.classList.contains('active')) {
-                        menuItems.classList.remove('active'); // ปิดเมนู
-                        clearTimeout(hideMenuTimeout); // ล้าง timeout
-                    }
-                });
-                // เมื่อคลิกปุ่มในเมนูบนมือถือ ให้ปิดเมนูทันที
+
                 document.querySelectorAll(".menu-items button").forEach(btn => {
                     btn.addEventListener("click", () => {
-                        menuItems.classList.remove('active'); // ปิดเมนู
-                        clearTimeout(hideMenuTimeout); // ล้าง timeout
+                        // ปิดเมนูเมื่อคลิกปุ่มใดๆ (รวมถึงปุ่มเสียง)
+                        menuItems.classList.remove('active');
                     });
                 });
+
+                document.addEventListener('click', (event) => {
+                    const isClickInsideMenu = mainMenuBar.contains(event.target);
+                    if (!isClickInsideMenu) {
+                        menuItems.classList.remove('active');
+                    }
+                });
+
             } else {
-                // พฤติกรรมสำหรับ Desktop: Hover เพื่อเปิด, mouseleave เพื่อซ่อนพร้อม delay
                 mainMenuBar.addEventListener('mouseenter', showMenu);
                 mainMenuBar.addEventListener('mouseleave', hideMenuWithDelay);
-
-                // สำคัญ: ถ้าเมาส์เข้าสู่ menuItems เอง ให้เมนูยังคงเปิดอยู่
                 menuItems.addEventListener('mouseenter', showMenu);
                 menuItems.addEventListener('mouseleave', hideMenuWithDelay);
             }
@@ -866,13 +770,10 @@
                 "ความพยายามในการทำโปรเจกต์กลุ่มที่ยากมากๆ แต่เราก็ผ่านมันมาได้",
                 "เสียงหัวเราะและรอยยิ้มของพวกเราในทุกๆ วันที่โรงเรียน"
             ];
-            // แสดง Random Memory เมื่อโหลดหน้า
             randomMemoryElement.innerText = memories[Math.floor(Math.random() * memories.length)];
 
             // --- Countdown Timer (จับเวลาถอยหลัง) ---
-            // กำหนดวันที่จบการศึกษา (ปี 2026, เดือนมีนาคม, วันที่ 31, เวลา 23:59:59)
             const gradDate = new Date("2026-03-31T23:59:59").getTime();
-            // อัปเดต Countdown ทุกๆ 1 วินาที
             const updateCountdown = () => {
                 const now = new Date().getTime();
                 const distance = gradDate - now;
@@ -883,64 +784,61 @@
                     return;
                 }
 
-                // คำนวณวัน, ชั่วโมง, นาที, วินาที
                 const days = Math.floor(distance / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                // แสดงผลลัพธ์
                 countdownTimerElement.innerText = `เหลืออีก ${days} วัน ${hours} ชั่วโมง ${minutes} นาที ${seconds} วินาที`;
             };
 
-            const countdownInterval = setInterval(updateCountdown, 1000); // เรียกใช้ updateCountdown ทุก 1 วินาที
+            const countdownInterval = setInterval(updateCountdown, 1000);
             updateCountdown();
+
             // --- Scroll to Section Function (ฟังก์ชันเลื่อนไปยัง Section) ---
             window.scrollToSection = (id) => {
                 const element = document.getElementById(id);
                 if (element) {
                     element.scrollIntoView({ behavior: 'smooth' });
-                    menuItems.classList.remove('active');
+                    menuItems.classList.remove('active'); // ปิดเมนูเมื่อคลิก
                     clearTimeout(hideMenuTimeout);
                 }
             };
+
             // --- Carousel Gallery Logic (ตรรกะ Carousel Gallery) ---
             const carouselSlides = document.querySelector('.carousel-slides');
             const carouselImages = document.querySelectorAll('.carousel-slides img');
             const prevButton = document.querySelector('.carousel-button.prev');
             const nextButton = document.querySelector('.carousel-button.next');
             const indicatorsContainer = document.querySelector('.carousel-indicators');
-            let currentIndex = 0; // Index ของรูปภาพปัจจุบัน
+            let currentIndex = 0;
             const totalImages = carouselImages.length;
             let autoSlideInterval;
 
-            // สร้างจุดบอกตำแหน่งสไลด์ (indicators)
             const createIndicators = () => {
                 for (let i = 0; i < totalImages; i++) {
                     const indicator = document.createElement('div');
                     indicator.classList.add('carousel-indicator');
-                    indicator.addEventListener('click', () => goToSlide(i)); // คลิกที่จุดเพื่อไปสไลด์นั้นๆ
+                    indicator.addEventListener('click', () => goToSlide(i));
                     indicatorsContainer.appendChild(indicator);
                 }
                 updateIndicators();
             };
-            // อัปเดตตำแหน่งของสไลด์
+
             const updateCarousel = () => {
                 carouselSlides.style.transform = `translateX(${-currentIndex * 100}%)`;
                 updateIndicators();
             };
-            // อัปเดตสถานะของจุดบอกตำแหน่ง
+
             const updateIndicators = () => {
                 document.querySelectorAll('.carousel-indicator').forEach((indicator, index) => {
                     if (index === currentIndex) {
-                        indicator.classList.add('active'); // เพิ่มคลาส active ให้จุดปัจจุบัน
-                    }
-                    else {
-                        indicator.classList.remove('active'); // ลบคลาส active ออกจากจุดอื่น
+                        indicator.classList.add('active');
+                    } else {
+                        indicator.classList.remove('active');
                     }
                 });
             };
 
-            // ไปยังสไลด์ที่กำหนด
             const goToSlide = (index) => {
                 currentIndex = index;
                 if (currentIndex < 0) {
@@ -951,31 +849,30 @@
                 updateCarousel();
                 resetAutoSlide();
             };
-            // เลื่อนไปสไลด์ถัดไป
+
             const nextSlide = () => {
                 goToSlide(currentIndex + 1);
             };
 
-            // เลื่อนไปสไลด์ก่อนหน้า
             const prevSlide = () => {
                 goToSlide(currentIndex - 1);
             };
 
-            // เริ่มการเลื่อนสไลด์อัตโนมัติ
             const startAutoSlide = () => {
                 autoSlideInterval = setInterval(nextSlide, 4000);
             };
-            // รีเซ็ตการเลื่อนสไลด์อัตโนมัติ (หยุดแล้วเริ่มใหม่)
+
             const resetAutoSlide = () => {
                 clearInterval(autoSlideInterval);
                 startAutoSlide();
             };
-            // Event Listeners สำหรับปุ่มควบคุม Carousel
+
             nextButton.addEventListener('click', nextSlide);
             prevButton.addEventListener('click', prevSlide);
-            // เริ่มต้นการทำงานของ Carousel
+
             createIndicators();
             startAutoSlide();
+
             // --- Announcement Banner Logic (ตรรกะแถบประกาศ) ---
             const announcements = [
                 "🎉 เตรียมตัวพบกับความทรงจำครั้งใหม่ เร็วๆ นี้! 🎉",
@@ -988,17 +885,19 @@
                 announcementText.classList.add('fade-out');
 
                 setTimeout(() => {
-                    currentAnnouncementIndex = (currentAnnouncementIndex + 1) % announcements.length; // วนกลับไปข้อความแรก
+                    currentAnnouncementIndex = (currentAnnouncementIndex + 1) % announcements.length;
                     announcementText.textContent = announcements[currentAnnouncementIndex];
                     announcementText.classList.remove('fade-out');
                     announcementText.classList.add('fade-in');
                 }, 500);
             };
-            // แสดงประกาศแรกทันที
+
             announcementText.textContent = announcements[currentAnnouncementIndex];
             announcementText.classList.add('fade-in');
-            // สลับประกาศทุก 7 วินาที
             setInterval(displayAnnouncement, 7000);
+
+            // Initial icon update for sound button
+            updateSoundButtonIcon();
         });
     </script>
 </body>
